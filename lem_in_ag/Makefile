@@ -31,7 +31,7 @@ SRC_ALGO	=	main.c\
 				created_node.c\
 				bfs.c\
 				
-SRC_VISU	=	
+SRC_VISU	=	main.c\	
 
 OBJ_ALGO	=	$(SRC_ALGO:.c=.o)
 OBJ_VISU	=	$(SRC_VISU:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/05 16:08:12 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/05 17:13:31 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,29 @@ void		push_stack(int *stack, int room, int nb_rooms, int *prev, int x)
 	stack[i] = room;
 }	
 
-int		print_path(int *prev, t_lemin *e, int nb_rooms)
+int		print_path(int *prev, t_lemin *e)
 {
 	int i;
 	int save;
-	int	path[nb_rooms];
+	int	path[e->nb_rooms];
 	int	next_path;
 
 	i = 0;
-	save = e->end->nb_rooms;
+	save = e->nb_end;
 	next_path = -1;
-	while (prev[save] != start)
+	while (prev[save] != e->nb_start)
 	{
 		path[i] = prev[save];
-		end = prev[save];
+		save = prev[save];
 		next_path = i > 0 && next_path == -1 ? path[i] : -1;
 		i++;
 	}
-	printf("\n\n%d->", e->table_r[e->start->nb_rooms]->name);
+	printf("\n\n%s->", e->table_r[e->nb_start]->name);
 	while (--i >= 0)
 	{
-		printf("%d->", e->table_r[path[i]]->name);
+		printf("%s->", e->table_r[path[i]]->name);
 	}
-	printf("%d\n", e->table_r[e->end->nb_rooms]->name);
+	printf("%s\n", e->table_r[e->nb_end]->name);
 	return (next_path == -1 ? path[0] : next_path);
 }
 
@@ -104,7 +104,7 @@ int			paths_remain(t_lemin *e, int *find_new)
 	i = 0;
 	while (i < e->nb_rooms)
 	{
-		if (e->map[e->start->nb_rooms][i] == 1 && !find_new[i])
+		if (e->map[e->nb_start][i] == 1 && !find_new[i])
 			return (1);
 		i++;
 	}
@@ -124,12 +124,12 @@ void		bfs(t_lemin *e)
 	i = -1;
 	while (++i < e->nb_rooms)
 		find_new[i] = 0;
-	while (paths_remain(e, start, find_new))
+	while (paths_remain(e, find_new))
 	{
-		x = e->start->nb_rooms;
+		x = e->nb_start;
 		reset_tab(stack, visited, prev, e, find_new);
 		visited[x] = 1;
-		while (x != e->end->nb_rooms)
+		while (x != e->nb_end)
 		{
 			y = 0;
 			while (y < e->nb_rooms)
@@ -143,14 +143,14 @@ void		bfs(t_lemin *e)
 			while (++i < e->nb_rooms - 1)
 	//			printf("%d ", stack[i]);
 			x = stack[0];
-			if (x == end)
+			if (x == e->nb_end)
 				break ;
 			visited[x] = 1;
 			pop_stack(stack, e->nb_rooms);
 		}
 		sleep(1);
-		printf("to_block %d\n",print_path(prev, start, end, e->nb_rooms));
-		find_new[print_path(prev, start, end, e->nb_rooms)] = 1;
+		printf("to_block %d\n",print_path(prev, e));
+		find_new[print_path(prev, e)] = 1;
 
 	}
 }

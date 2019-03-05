@@ -20,17 +20,15 @@ typedef struct 		s_lemin
 	int 			nb_start;
 	int 			nb_end;
 	int				**map;
-	int 			tmpy;
 	struct s_rooms  *r;
 	struct s_ants	*a;
 	struct s_rooms   **table_r;
 	struct s_links	*l;
 	struct s_hash	**h;
-	struct s_path 	**p;
+	struct s_path 	*p;
 	struct s_rooms	*start;
 	struct s_rooms	*end;
 	struct s_info	*i;
-	struct s_parent *par;
 }					t_lemin;
 
 typedef struct 		s_rooms
@@ -75,10 +73,10 @@ typedef	struct 		s_info
 
 typedef struct 		s_path
 {
-	int 			*co;
+	int 			*path;
 	int				size_path;
-	int 			color;
-	int 			dist;
+//	int 			color;
+//	int 			dist;
 	struct s_path	*next;
 }					t_path;
 

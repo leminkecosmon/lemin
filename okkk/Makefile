@@ -29,6 +29,7 @@ SRC_ALGO	=	main.c\
 				created_map.c\
 				created_hash.c\
 				created_path.c\
+				path_creation_utils.c\
 				
 SRC_VISU	=	
 

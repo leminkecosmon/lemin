@@ -11,6 +11,8 @@ enum pos
 
 typedef struct 		s_lemin
 {
+	int				x;
+	int				y;
 	char			*av;
 	int 			nb_ants;
 	int 			st;
@@ -25,10 +27,11 @@ typedef struct 		s_lemin
 	struct s_rooms   **table_r;
 	struct s_links	*l;
 	struct s_hash	**h;
-	struct s_path 	*p;
 	struct s_rooms	*start;
 	struct s_rooms	*end;
 	struct s_info	*i;
+	struct s_path	*head_to_p;
+	struct s_path	*p;
 }					t_lemin;
 
 typedef struct 		s_rooms
@@ -75,8 +78,8 @@ typedef struct 		s_path
 {
 	int 			*path;
 	int				size_path;
-//	int 			color;
-//	int 			dist;
+	//	int 			color;
+	//	int 			dist;
 	struct s_path	*next;
 }					t_path;
 
@@ -94,7 +97,12 @@ void 			parsing_duplicate_rooms(t_rooms *r, t_rooms *v);
 void			parsing_links_unknow(t_links *l, t_rooms *r);
 void			created_hastable(t_lemin *e);
 int				generate_hash(char *str, int nb_rooms);
-void			created_path(t_lemin *e, int y,  int back);
 void			bfs(t_lemin *e);
+
+void			pop_stack(int *stack, int nb_rooms);
+int				add_path(int *prev, t_lemin *e);
+int				get_nb_links(t_lemin *e, int x);
+void			create_path(t_lemin *e, int *path, int len);
+void			push_stack(int *stack, t_lemin *e, int *prev);
 
 #endif

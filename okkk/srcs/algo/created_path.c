@@ -6,82 +6,12 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/05 17:13:31 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/06 17:04:29 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 #include <stdio.h>
-
-void		pop_stack(int *stack, int nb_rooms)
-{
-	int i;
-
-	i = 1;
-	while (i < nb_rooms - 1)
-	{
-		stack[i - 1] = stack[i];
-		i++;
-	}
-	stack[i - 1] = -1;
-}	
-
-void		push_stack(int *stack, int room, int nb_rooms, int *prev, int x)
-{
-	int i;
-
-	i = 0;
-	while (stack[i] != -1 && i < nb_rooms - 1)
-	{
-		if (stack[i] == room)
-			return ;
-		i++;
-	}
-	prev[room] = x;
-	stack[i] = room;
-}	
-
-int		print_path(int *prev, t_lemin *e)
-{
-	int i;
-	int save;
-	int	path[e->nb_rooms];
-	int	next_path;
-
-	i = 0;
-	save = e->nb_end;
-	next_path = -1;
-	while (prev[save] != e->nb_start)
-	{
-		path[i] = prev[save];
-		save = prev[save];
-		next_path = i > 0 && next_path == -1 ? path[i] : -1;
-		i++;
-	}
-	printf("\n\n%s->", e->table_r[e->nb_start]->name);
-	while (--i >= 0)
-	{
-		printf("%s->", e->table_r[path[i]]->name);
-	}
-	printf("%s\n", e->table_r[e->nb_end]->name);
-	return (next_path == -1 ? path[0] : next_path);
-}
-
-int			get_nb_links(t_lemin *e, int x)
-{
-	int i;
-	int links;
-
-	i = 0;
-	links = 0;
-	while (i < e->nb_rooms)
-	{
-		if (e->map[x][i] == 1)
-			links++;
-		i++;
-	}
-	return (links);
-}
 
 void		reset_tab(int *stack, int *visited, int *prev, t_lemin *e, int *s)
 {
@@ -111,46 +41,117 @@ int			paths_remain(t_lemin *e, int *find_new)
 	return (0);
 }
 
+int			is_stack_empty(int *stack, int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (stack[i] != -1)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void		set_bfs_base_var(int *find_new, t_lemin *e)
+{
+	int i;
+
+	i = -1;
+	if (!(e->p = malloc(sizeof(t_path))))
+		return ;
+	e->p->next = NULL;
+	while (++i < e->nb_rooms)
+		find_new[i] = 0;
+	e->head_to_p = e->p;
+}
+
+void		print_paths(t_lemin *e)
+{
+	int i;
+
+	e->p = e->head_to_p;
+	while (e->p)
+	{
+		ft_printf("\npath_len : %d\n", e->p->size_path);
+		i = -1;
+		while (++i < e->p->size_path - 1)
+			ft_printf("%d->", e->p->path[i]);
+		ft_printf("%d\n", e->p->path[e->p->size_path - 1]);
+		i = -1;
+		while (++i < e->p->size_path - 1)
+			ft_printf("%s->", e->table_r[e->p->path[i]]->name);
+		ft_printf("%s\n\n", e->table_r[e->p->path[e->p->size_path - 1]]->name);
+		if (!e->p->next)
+			break ;
+		e->p = e->p->next;
+	}
+}
+
+void		discover_more_paths(int *find_new, t_lemin *e)
+{
+	int		i;
+	t_path	*save;
+	int		get_path;
+	int		j;
+
+	i = -1;
+	get_path = -1;
+	save = e->head_to_p;
+	while (++i < e->p->size_path - 1)
+		if (find_new[get_path = e->p->path[i]] == 1)
+		{
+			while (save)
+			{
+				j = -1;
+				if (save->next && save == e->p)
+					save = save->next;
+				if (!save->next && save == e->p)
+					break ;
+				while (++j < save->size_path - 1)
+					if (save->path[j] == get_path)
+						while (++j < save->size_path - 1)
+							find_new[save->path[j]] = 0;
+				save = save->next;
+			}
+		}
+}
+
+
 void		bfs(t_lemin *e)
 {
-	int x;
-	int y;
 	int stack[e->nb_rooms - 1];
 	int	visited[e->nb_rooms];
 	int prev[e->nb_rooms - 1];
 	int	find_new[e->nb_rooms];
-	int i;
 
-	i = -1;
-	while (++i < e->nb_rooms)
-		find_new[i] = 0;
+	set_bfs_base_var(find_new, e);
 	while (paths_remain(e, find_new))
 	{
-		x = e->nb_start;
+		e->x = e->nb_start;
 		reset_tab(stack, visited, prev, e, find_new);
-		visited[x] = 1;
-		while (x != e->nb_end)
+		visited[e->x] = 1;
+		while (e->x != e->nb_end)
 		{
-			y = 0;
-			while (y < e->nb_rooms)
+			e->y = 0;
+			while (e->y < e->nb_rooms)
 			{
-				if (e->map[x][y] == 1 && !visited[y])
-					push_stack(stack, y, e->nb_rooms, prev, x);
-				y++;
+				if (e->map[e->x][e->y] == 1 && !visited[e->y])
+					push_stack(stack, e, prev);
+				e->y++;
 			}
-	//		printf("\n\n");
-			i = -1;
-			while (++i < e->nb_rooms - 1)
-	//			printf("%d ", stack[i]);
-			x = stack[0];
-			if (x == e->nb_end)
+			e->x = stack[0];
+			if (e->x == e->nb_end || is_stack_empty(stack, e->nb_rooms - 1))
 				break ;
-			visited[x] = 1;
+			visited[e->x] = 1;
 			pop_stack(stack, e->nb_rooms);
 		}
-		sleep(1);
-		printf("to_block %d\n",print_path(prev, e));
-		find_new[print_path(prev, e)] = 1;
-
+		if (is_stack_empty(stack, e->nb_rooms - 1))
+			break ;
+		find_new[add_path(prev, e)] = 1;
+		discover_more_paths(find_new, e);
 	}
+	print_paths(e);
 }

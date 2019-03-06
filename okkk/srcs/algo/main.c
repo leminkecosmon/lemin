@@ -77,6 +77,6 @@ int			main(int ac, char const *av[])
 	e.map = created_map(&e);
 	affiche_map(&e, e.map);
 	bfs(&e);
-	while (1);
+//	while (1);
 	return (0);
 }

@@ -126,17 +126,16 @@ void		discover_more_paths(int *find_new, t_lemin *e)
 
 void		bfs(t_lemin *e)
 {
-	int flag = 0;
 	int *stack;
 	int	*visited;
 	int *prev;
 	int	*find_new;
 
+	find_new = malloc(sizeof(int) * e->nb_rooms);
 	set_bfs_base_var(find_new, e);
 	stack = malloc(sizeof(int) * e->nb_rooms - 1);
 	visited = malloc(sizeof(int) * e->nb_rooms);
 	prev = malloc(sizeof(int) * e->nb_rooms - 1);
-	find_new = malloc(sizeof(int) * e->nb_rooms);
 	while (paths_remain(e, find_new))
 	{
 		e->x = e->nb_start;

@@ -96,4 +96,3 @@ void 	parsing_links(char *line, t_lemin *e)
 	if (!ft_strcmp(l->s1, l->s2))
 			exit(-1);
 }
-

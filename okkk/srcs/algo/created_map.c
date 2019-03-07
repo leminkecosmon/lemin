@@ -33,11 +33,11 @@ int		**created_map(t_lemin *e)
 	i = 0;
 	r = e->r;
 	l = e->l;
-	if (!(map = malloc(sizeof(int **) * e->nb_rooms + 1)))
+	if (!(map = malloc(sizeof(int **) * e->nb_rooms)))
 		return (NULL);
 	while (i < e->nb_rooms)
 	{
-		if (!(map[i] = malloc(sizeof(int *) * e->nb_rooms + 1)))
+		if (!(map[i] = malloc(sizeof(int *) * e->nb_rooms)))
 			return NULL;
 		map[i][e->nb_rooms] = 0;
 		map[i] = ft_memset(map[i], 0, e->nb_rooms - 1);

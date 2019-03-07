@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:41:53 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/06 14:50:20 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/07 14:54:46 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ void	create_path(t_lemin *e, int *path, int len)
 		return ;
 	e->p->next = NULL;
 	e->p->size_path = len + 2;
+	e->p->path[0] = e->nb_start;
 	e->p->path[len + 1] = e->nb_end;
 	while (--len >= 0)
 		e->p->path[j++] = path[len];	
-	e->p->path[0] = e->nb_start;
+	e->p->path[e->p->size_path - 1] = e->nb_end;
 }
 
 int			get_nb_links(t_lemin *e, int x)

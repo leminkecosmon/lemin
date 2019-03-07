@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/06 17:04:29 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/07 15:50:59 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void		reset_tab(int *stack, int *visited, int *prev, t_lemin *e, int *s)
 		prev[i] = 0;
 	}
 	visited[i] = s[i];
+	visited[e->nb_start] = 1;
 }
 
 int			paths_remain(t_lemin *e, int *find_new)
@@ -113,7 +114,10 @@ void		discover_more_paths(int *find_new, t_lemin *e)
 				while (++j < save->size_path - 1)
 					if (save->path[j] == get_path)
 						while (++j < save->size_path - 1)
+						{
 							find_new[save->path[j]] = 0;
+							ft_printf("unblo %d\n", save->path[j]);
+						}
 				save = save->next;
 			}
 		}
@@ -122,17 +126,21 @@ void		discover_more_paths(int *find_new, t_lemin *e)
 
 void		bfs(t_lemin *e)
 {
-	int stack[e->nb_rooms - 1];
-	int	visited[e->nb_rooms];
-	int prev[e->nb_rooms - 1];
-	int	find_new[e->nb_rooms];
+	int flag = 0;
+	int *stack;
+	int	*visited;
+	int *prev;
+	int	*find_new;
 
 	set_bfs_base_var(find_new, e);
+	stack = malloc(sizeof(int) * e->nb_rooms - 1);
+	visited = malloc(sizeof(int) * e->nb_rooms);
+	prev = malloc(sizeof(int) * e->nb_rooms - 1);
+	find_new = malloc(sizeof(int) * e->nb_rooms);
 	while (paths_remain(e, find_new))
 	{
 		e->x = e->nb_start;
 		reset_tab(stack, visited, prev, e, find_new);
-		visited[e->x] = 1;
 		while (e->x != e->nb_end)
 		{
 			e->y = 0;

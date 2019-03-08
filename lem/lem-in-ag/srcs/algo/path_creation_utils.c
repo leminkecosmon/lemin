@@ -6,38 +6,38 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:41:53 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/07 17:21:14 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/08 15:32:14 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void		pop_stack(int *stack, int nb_rooms)
+void		pop_stack(t_lemin *e, int nb_rooms)
 {
 	int i;
 
 	i = 1;
 	while (i < nb_rooms - 1)
 	{
-		stack[i - 1] = stack[i];
+		e->stack[i - 1] = e->stack[i];
 		i++;
 	}
-	stack[i - 1] = -1;
+	e->stack[i - 1] = -1;
 }	
 
-void		push_stack(int *stack, t_lemin *e, int *prev)
+void		push_stack(t_lemin *e)
 {
 	int i;
 
 	i = 0;
-	while (stack[i] != -1 && i < e->nb_rooms - 1)
+	while (e->stack[i] != -1 && i < e->nb_rooms - 1)
 	{
-		if (stack[i] == e->y)
+		if (e->stack[i] == e->y)
 			return ;
 		i++;
 	}
-	prev[e->y] = e->x;
-	stack[i] = e->y;
+	e->prev[e->y] = e->x;
+	e->stack[i] = e->y;
 }	
 
 void	create_path(t_lemin *e, int *path, int len)
@@ -59,6 +59,7 @@ void	create_path(t_lemin *e, int *path, int len)
 	while (--len >= 0)
 		e->p->path[j++] = path[len];
 	e->p->path[0] = e->nb_start;
+	e->nb_paths++;
 }
 
 int			get_nb_links(t_lemin *e, int x)
@@ -77,7 +78,7 @@ int			get_nb_links(t_lemin *e, int x)
 	return (links);
 }
 
-int		add_path(int *prev, t_lemin *e)
+int		add_path(t_lemin *e)
 {
 	int i;
 	int save;
@@ -88,10 +89,10 @@ int		add_path(int *prev, t_lemin *e)
 	path = malloc(sizeof(int) * e->nb_rooms);
 	save = e->nb_end;
 	next_path = -1;
-	while (prev[save] != e->nb_start)
+	while (e->prev[save] != e->nb_start)
 	{
-		path[i] = prev[save];
-		save = prev[save];
+		path[i] = e->prev[save];
+		save = e->prev[save];
 		next_path = next_path == -1 && get_nb_links(e, path[i])
 			> 2 ? path[i] : -1;
 		i++;

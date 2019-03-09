@@ -65,27 +65,30 @@ void 		affiche_map(t_lemin *e, int **map)
 }
 int			main(int ac, char const *av[])
 {
-	t_lemin e;
+	//t_lemin e;
+	t_lemin *e;
 	int i;
 
 	i = 0;
-	ft_bzero(&e, sizeof(t_lemin));
+	if (!(e = (t_lemin*)malloc(sizeof(t_lemin))))
+		exit(-1);	
+	//ft_bzero(&e, sizeof(t_lemin));
 	if (ac < 1 && av)
 	{
 		ft_putstr("usage: lem-in ,[maps...]");
 		return (0);
 	}
-	reader(&e);
-	e.map = created_map(&e);
-	affiche_map(&e, e.map);
-	bfs(&e);
+	reader(e);
+	e->map = created_map(e);
+//	affiche_map(e, e->map);
+	bfs(e);
 	while (av[i])
 	{
 		if (ft_strequ(av[i], "-v"))
-			visu(&e);
+			visu(e);
 		i++;
 	}
-	move_ants_forward(&e);
+	move_ants_forward(e);
 	
 	return (0);
 }

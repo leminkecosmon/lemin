@@ -16,7 +16,7 @@ void	img_pixel_put(t_mlx *e, int x, int y)
 {
 	int		pos;
 
-	if (x < 0 || y < 0)
+	if (x < 0 || y < 0 || x > WIDTH || y > HEIGHT)
 		return ;
 	pos = (x * e->image->img_bpp / 8) + (y * e->image->img_size_line);
 	e->image->img_data[pos] = e->color % 256;

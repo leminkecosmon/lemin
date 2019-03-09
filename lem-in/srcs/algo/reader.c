@@ -63,9 +63,10 @@ t_rooms	 **table_rooms(t_lemin *e)
 	int i;
 	t_rooms *ro;
 
+	ft_printf("%p\n", e->r);
 	ro = e->r;
 	i = 0;
-	if (!(r = (t_rooms **)malloc(sizeof(t_rooms) * e->nb_rooms)))
+	if (!(r = (t_rooms **)malloc(sizeof(t_rooms*) * e->nb_rooms)))
 		exit(-1);
 	while (i < e->nb_rooms)
 	{
@@ -80,14 +81,14 @@ int					reader(t_lemin *e)
 {
 	char 	*line;
 	enum 	pos d;
-	t_info 	*info;
 
 	d = ANTS;
 	e->end = NULL;
 	e->start = NULL;
+	e->nb_rooms = 0;
 	while (get_next_line(0, &line) > 0)
 	{
-		add_info(e, &info, line);
+		add_info(e, line);
 		parsing_glob(e, line, &d, 0);
 		ft_strdel(&line);
 	}

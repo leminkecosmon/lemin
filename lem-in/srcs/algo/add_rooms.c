@@ -10,17 +10,14 @@ static t_rooms	*new_rooms(void)
 	return (tmp);
 }
 
-static	void		coor_room(t_rooms **r, char *line, int i)
+static	void		coor_room(char *line, int i)
 {
 	if (ft_isdigit(line[i]))
 	{
-		(*r)->x = ft_atoi(&line[i]);
 		while (ft_isdigit(line[i]))
 			i++;
 		i++;
-		if (ft_isdigit(line[i]))
-			(*r)->y = ft_atoi(&line[i]);
-		else
+		if (!ft_isdigit(line[i]))
 			exit(-1);
 	}
 	else
@@ -46,57 +43,50 @@ char				*name_rooms(char *line)
 	return (str);
 }
 
-static void			add_rooms(t_lemin *e, t_rooms **rooms, char *line, int i)
+static void			add_rooms(t_lemin *e, char *line, int i)
 {
 	t_rooms	*tmp;
 
 	tmp = e->r;
 	if (!e->r)
 	{
-		*rooms = new_rooms();
-		e->r = *rooms;
+		e->nb_rooms = 0;
+		e->r = new_rooms();
 		e->r->name = name_rooms(line);
 		e->r->nb_rooms = 0;
 		e->nb_rooms++;
+		e->r->next = NULL;
 	}
 	else
 	{
-		*rooms = new_rooms();
 		while (tmp->next != NULL)
 		{
 			i++;
 			tmp = tmp->next;
 		}
-		(*rooms)->nb_rooms = i;
+		tmp->next = new_rooms();
+		tmp->next->nb_rooms = i;
 		e->nb_rooms++;
-		(*rooms)->name = name_rooms(line);
-		tmp->next = (*rooms);
+		tmp->next->name = name_rooms(line);
+		tmp->next->next = NULL;
 	}
 }
 
-static void			add_start(t_lemin *e, t_rooms **rooms, char *line)
+static void			add_start(t_lemin *e, char *line)
 {
-	t_rooms	*tmp;
-
-	tmp = e->start;
 	if (!e->start)
 	{
-		*rooms = new_rooms();
-		e->start = *rooms;
+		e->start = new_rooms();
 		e->start->name = name_rooms(line);
 		e->start->nb_rooms = e->nb_rooms;
 	}
 }
 
-static void			add_end(t_lemin *e, t_rooms **rooms, char *line)
+static void			add_end(t_lemin *e, char *line)
 {
-	t_rooms	*tmp;
-
-	tmp = e->end;
 	if (!e->end)
 	{
-		*rooms = new_rooms();
-		e->end = *rooms;
+		e->end = new_rooms();
 		e->end->name = name_rooms(line);
 		e->end->nb_rooms = e->nb_rooms;
 	}
@@ -104,7 +94,6 @@ static void			add_end(t_lemin *e, t_rooms **rooms, char *line)
 
 void			parsing_rooms(char *line, t_lemin *e, enum pos *d)
 {
-	t_rooms *r;
 	int 	i;
 
 	i = 0;
@@ -120,15 +109,15 @@ void			parsing_rooms(char *line, t_lemin *e, enum pos *d)
 	}
 	if (e->st == 1)
 	{
-		add_start(e, &r, line);
+		add_start(e, line);
 		e->st = 0;
 	}
 	else if (e->nd == 1)
 	{
-		add_end(e, &r, line);
+		add_end(e, line);
 		e->nd = 0;
 	}
-	add_rooms(e, &r, line, 1);
+	add_rooms(e, line, 1);
 	i++;
-	coor_room(&r, line, i);
+	coor_room(line, i);
 }

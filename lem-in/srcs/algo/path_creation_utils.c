@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:41:53 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/08 15:32:14 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/09 16:48:04 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ void	create_path(t_lemin *e, int *path, int len)
 			return ;
 		e->p = e->p->next;
 	}
-	if (!(e->p->path = (int*)ft_memalloc(sizeof(t_path) * len + 2)))
-		return ;
+//	if (!(e->p->path = (int*)ft_memalloc(sizeof(int) * len + 2)))
+//		return ;
+	e->p->path = malloc(sizeof(int) * len + 2);
 	e->p->next = NULL;
 	e->p->size_path = len + 2;
 	e->p->path[len + 1] = e->nb_end;

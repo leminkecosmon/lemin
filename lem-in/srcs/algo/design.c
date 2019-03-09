@@ -29,6 +29,19 @@ void		function_color(t_design *d, t_mlx *v)
 	}
 }
 
+void		write_name_rooms(t_mlx *v)
+{
+	t_rooms *r;
+
+	r = v->e->r;
+	while (r)
+	{
+		mlx_string_put(v->mlx_ptr, v->win_ptr\
+		, v->space  + r->x, v->space - 10 + r->y, 0x00FFFFFF, r->name);
+		r = r->next;
+	}
+}
+
 void		info(t_mlx *v)
 {
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
@@ -40,9 +53,15 @@ void		info(t_mlx *v)
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
 		, 300, 930, 0x00FFFFFF, "1 = start");
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
-		, 55, 930, 0x00FFFFFF, "2 = end");
+		, 55, 930, 0x00FFFFFF, "2 = pause");
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
-		, 55, 950, 0x00FFFFFF, ft_itoa(v->e->nb_ants));
+		, 600, 950, 0x00FFFFFF, "3 = affiche name_rooms");
+	mlx_string_put(v->mlx_ptr, v->win_ptr\
+		, 55, 950, 0x00FFFFFF, "nombre fourmis = ");
+	mlx_string_put(v->mlx_ptr, v->win_ptr\
+		, 230, 950, 0x00FFFFFF, ft_itoa(v->e->nb_ants));
+	if (v->affiche == 1)
+		write_name_rooms(v);
 }
 
 t_design	init_design(int x, int y, int fy, int fx)

@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/08 16:38:10 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/09 16:49:59 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void		set_bfs_base_var(t_lemin *e)
 		return ;
 	if (!(e->p = malloc(sizeof(t_path))))
 		return ;
+	e->p->path = NULL;
 	e->p->next = NULL;
 	while (++i < e->nb_rooms)
 		e->find_new[i] = 0;
-	e->head_to_p = e->p;
 }
 
 void		print_paths(t_lemin *e, t_path *sa)
@@ -127,13 +127,13 @@ void		discover_more_paths(t_lemin *e)
 		}
 }
 
-
 void		bfs(t_lemin *e)
 {
 	t_path *save;
 
 	set_bfs_base_var(e);
 	save = e->p;
+	e->head_to_p = NULL;
 	while (paths_remain(e))
 	{
 		if (e->map[e->nb_start][e->nb_end] == 1)
@@ -163,6 +163,8 @@ void		bfs(t_lemin *e)
 		e->find_new[add_path(e)] = 1;
 		discover_more_paths(e);
 	}
+	ft_printf("%p %p %p\n", e->p, save, e->head_to_p);
+	ft_printf("%p\n", save->path);
 	print_paths(e, save);
-	e->p = save;
+//	e->p = save;
 }

@@ -10,25 +10,25 @@ static t_info	*new_info(void)
 	return (tmp);
 }
 
-void			add_info(t_lemin *e, t_info **info, char *line)
+void			add_info(t_lemin *e, char *line)
 {
 	t_info	*tmp;
 
-	tmp = e->i;
 	if (!e->i)
 	{
-		*info = new_info();
-		e->i = *info;
+		e->i = new_info();
 		if (!(e->i->line = ft_strdup(line)))
 			exit(-1);
+		e->i->next = NULL;
 	}
 	else
 	{
-		*info = new_info();
-		if (!((*info)->line = ft_strdup(line)))
-			exit(-1);
+		tmp = e->i;
 		while (tmp->next != NULL)
 			tmp = tmp->next;
-		tmp->next = (*info);
+		tmp->next = new_info();
+		if (!(tmp->next->line = ft_strdup(line)))
+			exit(-1);
+		tmp->next->next = NULL;
 	}
 }

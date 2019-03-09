@@ -10,31 +10,30 @@ static t_ants	*new_ants(void)
 	return (tmp);
 }
 
-static void			add_ants(t_lemin *e, t_ants **ants, int i)
+static void			add_ants(t_lemin *e, int i)
 {
 	t_ants	*tmp;
 
 	tmp = e->a;
 	if (!e->a)
 	{
-		*ants = new_ants();
-		e->a = *ants;
+		e->a = new_ants();
 		e->a->nb_ants = i;
+		e->a->next = NULL;
 	}
 	else
 	{
-		*ants = new_ants();
-		(*ants)->nb_ants = i;
 		while (tmp->next != NULL)
 			tmp = tmp->next;
-		tmp->next = (*ants);
+		tmp->next = new_ants();
+		tmp->next->nb_ants = i;
+		tmp->next->next = NULL;
 	}
 }
 
 void		parsing_ants(t_lemin *e, char *line)
 {
 	int		i;
-	t_ants 	*ants;
 
 	i = 0;
 	if (line[i] == '+')
@@ -53,5 +52,5 @@ void		parsing_ants(t_lemin *e, char *line)
 	e->nb_ants = ft_atoi(line);
 	i = 0;
 	while (++i < e->nb_ants + 1)
-		add_ants(e, &ants, i);
+		add_ants(e, i);
 }

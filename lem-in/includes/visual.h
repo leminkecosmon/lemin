@@ -58,6 +58,7 @@ typedef	struct			s_mlx
 	void				*img;
 	int					color;
 	int 				space;
+	int 				affiche;
 	t_design			*d;
 	t_event				*even;
 	t_image				*image;

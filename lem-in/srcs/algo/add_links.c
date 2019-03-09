@@ -55,44 +55,42 @@ char			*name_links(char *line, t_links *l)
 	return (NULL);
 }
 
-static void			add_links(t_lemin *e, t_links **l, char *line, int i)
+static void			add_links(t_lemin *e, char *line, int i)
 {
 	t_links	*tmp;
 
 	tmp = e->l;
 	if (!e->l)
 	{
-		*l = new_links();
-		e->l = *l;
+		e->l = new_links();
 		e->l->s1 = name_links(line, e->l);
 		e->l->s2 = name_links(line, e->l);
-		verif_link((*l)->s1, (*l)->s2, e->r);
+		verif_link(e->l->s1, e->l->s2, e->r);
 		e->l->n_links = i;
+		e->l->next = NULL;
 	}
 	else
 	{
-		*l = new_links();
 		while (tmp->next != NULL)
 		{
 			i++;
 			tmp = tmp->next;
 		}
-		(*l)->s1 = name_links(line,	*l);
-		(*l)->s2 = name_links(line, *l);
-		verif_link((*l)->s1, (*l)->s2, e->r);
-		(*l)->n_links = i;
+		tmp->next = new_links();
+		tmp->next->s1 = name_links(line, tmp->next);
+		tmp->next->s2 = name_links(line, tmp->next);
+		verif_link(tmp->next->s1, tmp->next->s2, e->r);
+		tmp->n_links = i;
 		e->nb_links = i;
-		tmp->next = (*l);
+		tmp->next->next = NULL;
+		if (!ft_strcmp(tmp->next->s1, tmp->next->s2))
+			exit(-1);
 	}
 }
 
 void 	parsing_links(char *line, t_lemin *e)
 {
-	t_links *l;
-
 	if (!ft_strchr(line, '-'))
 			exit(-1);
-	add_links(e, &l, line, 0);
-	if (!ft_strcmp(l->s1, l->s2))
-			exit(-1);
+	add_links(e, line, 0);
 }

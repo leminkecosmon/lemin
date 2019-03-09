@@ -53,8 +53,10 @@ void 		view_coor(t_rooms *r, t_mlx *v)
 	int fy;
 	int fx;
 
-	y = v->space + r->y;
-	x = v->space + r->x;
+	y = r->y;
+	x = r->x;
+	ft_putnbr(v->e->maxy);
+	ft_putnbr(v->e->maxx);
 	if (r->next)
 	{
 		fy = v->space + r->next->y + 30;
@@ -63,22 +65,44 @@ void 		view_coor(t_rooms *r, t_mlx *v)
 	v->color = 0xfbc531;
 	*(v->d) = init_design(v->space + r->x, v->space + r->y, v->space + r->y + 20, v->space + r->x + 20);
 	function_color(v->d, v);
-	if (r->next)
-		draw_breseham(y, x, fy, fx, v);
-	mlx_string_put(v->mlx_ptr, v->win_ptr, 500, 200 + r->y, 0x00FFFFFF, "dzadzaedazda");
+}
 
-	v->space += 30;
+void 		view_link(t_links *l, t_mlx *v)
+{
+	int y;
+	int x;
+	int fy;
+	int fx;
 
+	x = v->e->h[generate_hash(l->s1, v->e->nb_rooms)]->r->x + v->space;
+	y = v->e->h[generate_hash(l->s1, v->e->nb_rooms)]->r->y + v->space;
+	fx = v->e->h[generate_hash(l->s2, v->e->nb_rooms)]->r->x + v->space;
+	fy = v->e->h[generate_hash(l->s2, v->e->nb_rooms)]->r->y + v->space;
+	v->color = 0xe1b12c;
+	draw_breseham(y, x, fy, fx, v);
 }
 
 void 		viewer(t_mlx *v)
 {
 	t_rooms *r;
+	t_links *l;
 
+	mlx_clear_window(v->mlx_ptr, v->win_ptr);
+	v->space = 200;
 	r = v->e->r;
+	l = v->e->l;
 	while (r)
 	{
 		view_coor(r, v);
 		r = r->next;
 	}
+	while (l)
+	{
+		view_link(l, v);
+		l = l->next;
+	}
+	design_windows(v);
+	mlx_put_image_to_window(v->mlx_ptr, v->win_ptr, v->image->img,
+	0, 0);
+	info(v);
 }

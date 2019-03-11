@@ -31,6 +31,7 @@ typedef struct 		s_lemin
 	int 			maxx;
 	int 			minx;
 	int 			miny;
+	char			***saa;
 	struct s_rooms  *r;
 	struct s_ants	*a;
 	struct s_rooms   **table_r;

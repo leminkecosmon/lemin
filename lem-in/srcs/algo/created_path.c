@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/09 16:49:59 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/11 11:27:35 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void		print_paths(t_lemin *e, t_path *sa)
 	}
 }
 
-void		discover_more_paths(t_lemin *e)
+void		discover_more_paths(t_lemin *e, t_path *s)
 {
 	int		i;
 	t_path	*save;
@@ -107,7 +107,7 @@ void		discover_more_paths(t_lemin *e)
 
 	i = -1;
 	get_path = -1;
-	save = e->head_to_p;
+	save = s;
 	while (++i < e->p->size_path - 1)
 		if (e->find_new[get_path = e->p->path[i]] == 1)
 		{
@@ -133,7 +133,6 @@ void		bfs(t_lemin *e)
 
 	set_bfs_base_var(e);
 	save = e->p;
-	e->head_to_p = NULL;
 	while (paths_remain(e))
 	{
 		if (e->map[e->nb_start][e->nb_end] == 1)
@@ -161,10 +160,10 @@ void		bfs(t_lemin *e)
 		if (is_stack_empty(e->stack, e->nb_rooms - 1))
 			break ;
 		e->find_new[add_path(e)] = 1;
-		discover_more_paths(e);
+		discover_more_paths(e, save);
+		if (e->p->size_path == 5)
+			ft_printf("jj %d\n", e->p->path[3]);
 	}
-	ft_printf("%p %p %p\n", e->p, save, e->head_to_p);
-	ft_printf("%p\n", save->path);
 	print_paths(e, save);
-//	e->p = save;
+	e->p = save;
 }

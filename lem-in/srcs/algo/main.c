@@ -72,7 +72,7 @@ int			main(int ac, char const *av[])
 	i = 0;
 	if (!(e = (t_lemin*)malloc(sizeof(t_lemin))))
 		exit(-1);	
-	//ft_bzero(&e, sizeof(t_lemin));
+	ft_bzero(e, sizeof(t_lemin));
 	if (ac < 1 && av)
 	{
 		ft_putstr("usage: lem-in ,[maps...]");
@@ -89,6 +89,5 @@ int			main(int ac, char const *av[])
 		i++;
 	}
 	move_ants_forward(e);
-	
 	return (0);
 }

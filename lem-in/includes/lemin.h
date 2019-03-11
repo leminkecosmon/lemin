@@ -39,8 +39,8 @@ typedef struct 		s_lemin
 	struct s_rooms	*start;
 	struct s_rooms	*end;
 	struct s_info	*i;
-	struct s_path	*head_to_p;
 	struct s_path	*p;
+	struct s_path	*select_p;
 }					t_lemin;
 
 typedef struct 		s_rooms

@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:41:53 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/09 16:48:04 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/11 11:48:34 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		push_stack(t_lemin *e)
 	e->stack[i] = e->y;
 }	
 
-void	create_path(t_lemin *e, int *path, int len)
+void	create_path(t_lemin *e, int *pa, int len)
 {
 	int j;
 
@@ -51,14 +51,14 @@ void	create_path(t_lemin *e, int *path, int len)
 			return ;
 		e->p = e->p->next;
 	}
-//	if (!(e->p->path = (int*)ft_memalloc(sizeof(int) * len + 2)))
-//		return ;
 	e->p->path = malloc(sizeof(int) * len + 2);
 	e->p->next = NULL;
 	e->p->size_path = len + 2;
-	e->p->path[len + 1] = e->nb_end;
 	while (--len >= 0)
-		e->p->path[j++] = path[len];
+	{
+		e->p->path[j++] = pa[len];
+	}
+	e->p->path[e->p->size_path - 1] = e->nb_end;
 	e->p->path[0] = e->nb_start;
 	e->nb_paths++;
 }

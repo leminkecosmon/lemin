@@ -14,10 +14,8 @@ INCLUDES_VISU	=	-I ~/usr/local/includes/
 OBJDIR		= 	objs
 
 OBJDIR_ALGO	=	objs/algo
-OBJDIR_VISU	=	objs/visual
 
 SRCDIR_ALGO	=	srcs/algo
-SRCDIR_VISU	=	srcs/visual
 
 SRC_ALGO	=	main.c\
 				parsing.c\
@@ -36,26 +34,17 @@ SRC_ALGO	=	main.c\
 				image.c\
 				view_map.c\
 				move_ants.c\
-				
-SRC_VISU	=	
 
 OBJ_ALGO	=	$(SRC_ALGO:.c=.o)
-OBJ_VISU	=	$(SRC_VISU:.c=.o)
 
 SRCS_ALGO	=	$(addprefix $(SRCDIR_ALGO)/, $(SRC_ALGO))
 OBJS_ALGO	=	$(addprefix $(OBJDIR_ALGO)/, $(SRC_ALGO:.c=.o))
 
-SRCS_VISU	=	$(addprefix $(SRCDIR_VISU)/, $(SRC_VISU))
-OBJS_VISU	=	$(addprefix $(OBJDIR_VISU)/, $(SRC_VISU:.c=.o))
 
-
-all: directory $(NAME) $(VISU)
+all: directory $(NAME) 
 
 $(NAME): $(OBJDIR_ALGO) $(LIB) $(OBJS_ALGO) $(INCLUDE)
-	@$(CC) $(FLAGS) srcs/algo/libmlx.a $(LIB) $(LIB_VISU)  -o $@ $(OBJS_ALGO) $(LIBLINK)
-
-# $(VISU): $(OBJDIR_VISU) $(LIB) $(OBJS_VISU) $(INCLUDE)
-# 	cc  $(LIB) $(LIB_VISU) -o $@ $(OBJS_VISU) 
+	@$(CC) $(FLAGS) srcs/algo/libmlx.a $(LIB) $(LIB_VISU) -o $@ $(OBJS_ALGO) $(LIBLINK)
 
 $(LIB):
 	@make -C $(LIBDIR)
@@ -63,10 +52,8 @@ $(LIB):
 $(OBJDIR_ALGO)/%.o: $(SRCDIR_ALGO)/%.c
 	gcc $(FLAGS) -c $^ -o $@ $(INCLUDES)
 
-$(OBJDIR_VISU)/%.o: $(SRCDIR_VISU)/%.c
-	gcc $(FLAGS) -c $^ -o $@ $(INCLUDES) $(INCLUDES_VISU)
 
-directory: $(OBJDIR) $(OBJDIR_ALGO) $(OBJDIR_VISU)
+directory: $(OBJDIR) $(OBJDIR_ALGO) 
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
@@ -74,8 +61,6 @@ $(OBJDIR):
 $(OBJDIR_ALGO):
 	@mkdir -p $(OBJDIR_ALGO)
 
-$(OBJDIR_VISU):
-	@mkdir -p $(OBJDIR_VISU)
 
 clean:
 	@rm -rf $(OBJDIR)
@@ -85,7 +70,6 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm -f $(VISU)
 	@make -C $(LIBDIR) fclean
 
 re: fclean all

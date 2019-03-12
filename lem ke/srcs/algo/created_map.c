@@ -26,12 +26,10 @@ void	created_liasion_map(int **map, t_lemin *e)
 int		**created_map(t_lemin *e)
 {
 	int 	**map;
-	t_rooms *r;
 	t_links *l;
 	int 	i;
 
 	i = 0;
-	r = e->r;
 	l = e->l;
 	if (!(map = malloc(sizeof(int **) * e->nb_rooms)))
 		exit (-1);

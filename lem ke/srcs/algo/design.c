@@ -27,6 +27,8 @@ void		function_color(t_design *d, t_mlx *v)
 		}
 		d->y++;
 	}
+	free(d);
+	ft_memset(d, 0, sizeof(t_design));
 }
 
 void		write_name_rooms(t_mlx *v)
@@ -64,28 +66,31 @@ void		info(t_mlx *v)
 		write_name_rooms(v);
 }
 
-t_design	init_design(int x, int y, int fy, int fx)
+t_design	*init_design(int x, int y, int fy, int fx)
 {
-	return ((t_design) {fx, fy, x, y});
+	t_design *d;
+
+	if (!(d = malloc(sizeof(t_design))))
+		exit(-1);
+	d->x = x;
+	d->y = y;
+	d->fy = fy;
+	d->fx = fx;
+	return (d);
 }
 
 void		design_windows(t_mlx *v)
 {
-	int y;
-	int x;
-
-	y = 0;
-	x = 0;
 	v->color = 0x4A0404;
-	*(v->d) = init_design(0, 0, 100, WIDTH);
+	v->d = init_design(0, 0, 100, WIDTH);
 	function_color(v->d, v);
 	v->color = 0x3B3B3B;
-	*(v->d) = init_design(0, 100, 103, WIDTH);
+	v->d = init_design(0, 100, 103, WIDTH);
 	function_color(v->d, v);
-	*(v->d) = init_design(0, HEIGHT - 103, HEIGHT - 100, WIDTH);
+	v->d = init_design(0, HEIGHT - 103, HEIGHT - 100, WIDTH);
 	function_color(v->d, v);
 	v->color = 0x4A0404;
-	*(v->d) = init_design(0, HEIGHT - 100, HEIGHT, WIDTH);
+	v->d = init_design(0, HEIGHT - 100, HEIGHT, WIDTH);
 	function_color(v->d, v);
 	v->color = 0x2f3640;
 }

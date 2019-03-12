@@ -40,12 +40,12 @@ static void		verif_end(t_lemin *e, enum pos *d)
 
 void	parsing_glob(t_lemin *e, char *line, enum pos *d, int n)
 {
-	if (line[0] == '#' && line[1] != '#')
-		n = 1;
-	else if (!ft_strcmp(line, "##start"))
+	if (!ft_strcmp(line, "##start"))
 		verif_start(e, d);
 	else if (!ft_strcmp(line, "##end"))
  		verif_end(e, d);
+	else if (line[0] == '#')
+		n = 1;
 	else if (*d == ANTS && n != 1)
 	{
 		parsing_ants(e, line);

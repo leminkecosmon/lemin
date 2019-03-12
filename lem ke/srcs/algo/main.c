@@ -82,12 +82,14 @@ int			main(int ac, char const *av[])
 	e->map = created_map(e);
 //	affiche_map(e, e->map);
 	bfs(e);
+
+	move_ants_forward(e);
+
 	while (av[i])
 	{
 		if (ft_strequ(av[i], "-v"))
 			visu(e);
 		i++;
 	}
-	move_ants_forward(e);
 	return (0);
 }

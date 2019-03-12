@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "printf/includes/printf.h"
+
 void		conv_decimal(va_list arg, t_parsing *lst, int *ret)
 {
 	intmax_t	dec;

@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:41:53 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/11 11:48:34 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/12 17:10:08 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int		add_path(t_lemin *e)
 	int	next_path;
 
 	i = 0;
-	path = malloc(sizeof(int) * e->nb_rooms);
+	if (!(path = malloc(sizeof(int) * e->nb_rooms)))
+		exit(-1);
 	save = e->nb_end;
 	next_path = -1;
 	while (e->prev[save] != e->nb_start)
@@ -98,7 +99,13 @@ int		add_path(t_lemin *e)
 			> 2 ? path[i] : -1;
 		i++;
 	}
-	create_path(e, path, i);
+	save = i;
+	while (i < e->nb_rooms)
+	{
+		path[i] = 0;
+		i++;
+	}
+	create_path(e, path, save);
 	i = next_path == -1 ? path[0] : next_path;
 	ft_printf("to_block : %d\n", i);
 	return (next_path == -1 ? path[0] : next_path);

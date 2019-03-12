@@ -49,7 +49,7 @@ void	 	draw_breseham(int yi, int xi, int yf, int xf, t_mlx *v)
 void 		view_coor(t_rooms *r, t_mlx *v)
 {
 	v->color = 0xfbc531;
-	v->d = init_design(r->x, r->y, r->y + 20, r->x + 20);
+	*(v->d) = init_design(r->x, r->y, r->y + 20, r->x + 20);
 	function_color(v->d, v);
 }
 
@@ -135,33 +135,15 @@ void	 space_init(t_lemin *e, t_mlx *v)
 	}
 }
 
-int 		path_max(t_lemin *e)
-{
-	t_path *p;
-	int i;
-
-	i = 0;
-	p = e->p;
-	while (p)
-	{
-		i = p->size_path;
-		p = p->next;
-	}
-	return (i);
-}
-
 void 		viewer(t_mlx *v)
 {
 	t_rooms *r;
 	t_links *l;
 	int y;
 	int x;
-	int path_mx;
 
 	y = 0;
 	x = 0;
-	path_mx = path_max(v->e);
-	path_mx += 2;
 	mlx_clear_window(v->mlx_ptr, v->win_ptr);
 	r = v->e->r;
 	l = v->e->l;
@@ -171,7 +153,7 @@ void 		viewer(t_mlx *v)
 	v->e->h[generate_hash(v->e->start->name, v->e->nb_rooms)]->r->x =  50;
 	y = v->e->h[generate_hash(v->e->start->name, v->e->nb_rooms)]->r->nb_rooms;
 	v->e->map[y][y] = 2;
-	v->tmpspacew = WIDTH / path_mx;
+	v->tmpspacew = WIDTH / v->e->nb_rooms;
 	ft_abs(v->tmpspacew);
 	v->wspace = v->tmpspacew;
 	space_init(v->e, v);

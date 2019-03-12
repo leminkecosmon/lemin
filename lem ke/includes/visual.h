@@ -14,7 +14,7 @@
 # define VISUAL_H
 # include "../libft/libft.h"
 # include "../minilibx_macos/mlx.h"
-# define WIDTH 1400
+# define WIDTH 1200
 # define HEIGHT 1200
 # include "lemin.h"
 
@@ -71,7 +71,7 @@ typedef	struct			s_mlx
 }						t_mlx;
 
 t_visu					*create_elemt(void);
-t_design				*init_design(int x, int y, int fy, int fx);
+t_design				init_design(int x, int y, int fy, int fx);
 void					img_pixel_put(t_mlx *e, int x, int y);
 void					clear_image(t_mlx *e);
 void					design_windows(t_mlx *e);

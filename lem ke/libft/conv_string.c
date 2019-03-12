@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf/includes/printf.h"
 
+#include "printf/includes/printf.h"
 void			spec_pars_string(t_parsing *lst, int *ret, int co, char *str)
 {
 	str = controller_attr(lst, str);

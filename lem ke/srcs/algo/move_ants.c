@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/11 17:32:27 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/12 16:56:08 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ char	***create_saa(t_lemin *e, int nb_of_sp)
 
 	cr_saa = NULL;
 	extension = nb_of_sp < e->nb_ants ? e->nb_ants - nb_of_sp : 0;
+	ft_printf("%d\n", extension);
 	if (!(cr_saa = malloc(sizeof(char**) * e->nb_ants)))
 		exit(-1);
 	e->x = 0;
@@ -150,22 +151,25 @@ char	***create_saa(t_lemin *e, int nb_of_sp)
 	return (cr_saa);
 }
 
-char	*create_mask(t_lemin *e, int pos_ant, t_path *p)
+char	*create_mask(t_lemin *e, int pos_ant, t_path *p, int start)
 {
 	int			i;
 	char		*tmp;
 
-	i = 0;
-	while (i < p->size_path)
+	i = -1;
+	while (++i < start)
+		e->saa[e->x][i] = NULL;
+	i = start;
+	while (i < p->size_path + start)
 	{
 		if (!(e->saa[e->x][i] = malloc(sizeof(char) * 2 + nbr_len(p->path[i]) + nbr_len(pos_ant))))
 			exit(-1);
-		ft_bzero(e->saa[e->x][i], sizeof(char) * 2 + nbr_len(p->path[i] + nbr_len(pos_ant)));
+		ft_bzero(e->saa[e->x][i], sizeof(char) * 2 + nbr_len(p->path[i - start] + nbr_len(pos_ant)));
 		ft_strcat(e->saa[e->x][i], "L");
 		ft_strcat(e->saa[e->x][i], tmp = ft_itoa(pos_ant));
 		free(tmp);
 		ft_strcat(e->saa[e->x][i], "-");
-		ft_strcat(e->saa[e->x][i], tmp = ft_itoa(p->path[i]));
+		ft_strcat(e->saa[e->x][i], tmp = ft_itoa(p->path[i - start]));
 		free(tmp);
 		i++;
 	}
@@ -178,7 +182,11 @@ void	simple_move(t_lemin *e)
 	int		nb_of_sp;
 	int		pos_ant;
 	t_path	*save;
+	int		occupied_path;
+	int		start;
 	
+	start = 0;
+	occupied_path = 1;
 	pos_ant = 1;
 	short_path = e->p->size_path;
 	nb_of_sp = select_good_paths(e);
@@ -187,17 +195,23 @@ void	simple_move(t_lemin *e)
 	e->saa = create_saa(e, nb_of_sp);
 	while (e->x < e->nb_ants)
 	{
-		create_mask(e, pos_ant, save);
+		if (occupied_path >= e->nb_ants)
+		{
+			occupied_path = 0;
+			start++;
+		}
+		create_mask(e, pos_ant, save, start);
 		if (!save->next)
 			save = e->select_p;
 		else
 			save = save->next;
 		pos_ant++;
+		occupied_path++;
 		e->x++;
 	}
 	e->x = 0;
 	ft_printf("\n");
-	while (e->x < e->select_p->size_path)
+	while (e->x < (e->select_p->size_path + (nb_of_sp < e->nb_ants ? e->nb_ants - nb_of_sp : 0)))
 	{
 		e->y = 0;
 		while (e->y < e->nb_ants)
@@ -219,4 +233,5 @@ void	move_ants_forward(t_lemin *e)
 		simple_move(e);
 	// else
 	// 	complex_move(e);
+	ft_printf("%d\n", e->p->path[1]);
 }

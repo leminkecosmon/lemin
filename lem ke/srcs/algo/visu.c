@@ -28,6 +28,7 @@ int		deal_hook(void *param)
 void 	malloc_struct(t_mlx *v)
 {
 	if (!(v->image = malloc(sizeof(t_image))) &&
+		!(v->d = malloc(sizeof(t_design))) &&
 		!(v->even = malloc(sizeof(t_event))))
 		exit(-1);
 }

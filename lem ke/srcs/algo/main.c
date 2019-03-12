@@ -65,7 +65,6 @@ void 		affiche_map(t_lemin *e, int **map)
 }
 int			main(int ac, char const *av[])
 {
-	//t_lemin e;
 	t_lemin *e;
 	int i;
 
@@ -82,14 +81,12 @@ int			main(int ac, char const *av[])
 	e->map = created_map(e);
 //	affiche_map(e, e->map);
 	bfs(e);
-
-	move_ants_forward(e);
-
 	while (av[i])
 	{
 		if (ft_strequ(av[i], "-v"))
 			visu(e);
 		i++;
 	}
+	move_ants_forward(e);
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:38:01 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/02/22 15:38:02 by kecosmon         ###   ########.fr       */
+/*   Updated: 2019/03/18 10:59:23 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 
-int		deal_hook(void *param)
+int			deal_hook(void *param)
 {
 	t_mlx *v;
 
@@ -25,7 +25,7 @@ int		deal_hook(void *param)
 	return (1);
 }
 
-void 	malloc_struct(t_mlx *v)
+void		malloc_struct(t_mlx *v)
 {
 	if (!(v->image = malloc(sizeof(t_image))) &&
 		!(v->d = malloc(sizeof(t_design))) &&

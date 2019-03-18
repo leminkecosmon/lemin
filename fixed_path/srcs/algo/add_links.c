@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   add_links.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/18 09:34:17 by agesp             #+#    #+#             */
+/*   Updated: 2019/03/18 09:54:00 by agesp            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lemin.h"
 
-static t_links	*new_links(void)
+static t_links		*new_links(void)
 {
 	t_links	*tmp;
 
@@ -10,7 +22,7 @@ static t_links	*new_links(void)
 	return (tmp);
 }
 
-void 	verif_link(char *s1, char *s2, t_rooms *r)
+void				verif_link(char *s1, char *s2, t_rooms *r)
 {
 	int i;
 
@@ -27,10 +39,10 @@ void 	verif_link(char *s1, char *s2, t_rooms *r)
 		exit(-1);
 }
 
-char			*name_links(char *line, t_links *l)
+char				*name_links(char *line, t_links *l)
 {
-	int 	i;
-	char 	*str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	while (line[i] != '-' && line[i])
@@ -42,7 +54,7 @@ char			*name_links(char *line, t_links *l)
 		else
 			return (str);
 	}
-	else if(!l->s2)
+	else if (!l->s2)
 	{
 		i++;
 		if (!(str = ft_strdup(&line[i])))
@@ -55,7 +67,7 @@ char			*name_links(char *line, t_links *l)
 	return (NULL);
 }
 
-static void			add_links(t_lemin *e, char *line, int i)
+static int			add_links(t_lemin *e, char *line, int i)
 {
 	t_links	*tmp;
 
@@ -66,7 +78,6 @@ static void			add_links(t_lemin *e, char *line, int i)
 		e->l->s1 = name_links(line, e->l);
 		e->l->s2 = name_links(line, e->l);
 		verif_link(e->l->s1, e->l->s2, e->r);
-		e->l->n_links = i;
 		e->l->next = NULL;
 	}
 	else
@@ -80,17 +91,24 @@ static void			add_links(t_lemin *e, char *line, int i)
 		tmp->next->s1 = name_links(line, tmp->next);
 		tmp->next->s2 = name_links(line, tmp->next);
 		verif_link(tmp->next->s1, tmp->next->s2, e->r);
-		tmp->n_links = i;
-		e->nb_links = i;
 		tmp->next->next = NULL;
-		if (!ft_strcmp(tmp->next->s1, tmp->next->s2))
-			exit(-1);
 	}
+	return (i == 0 ? 1 : i);
 }
 
-void 	parsing_links(char *line, t_lemin *e)
+void				parsing_links(char *line, t_lemin *e)
 {
+	t_links		*save;
+	int			i;
+
 	if (!ft_strchr(line, '-'))
-			exit(-1);
-	add_links(e, line, 0);
+		exit(-1);
+	i = add_links(e, line, 0);
+	save = e->l;
+	while (save->next)
+		save = save->next;
+	save->n_links = i;
+	e->nb_links = i;
+	if (!ft_strcmp(save->s1, save->s2))
+		exit(-1);
 }

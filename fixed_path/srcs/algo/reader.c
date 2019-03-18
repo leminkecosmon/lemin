@@ -1,19 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reader.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/18 10:53:07 by agesp             #+#    #+#             */
+/*   Updated: 2019/03/18 10:56:15 by agesp            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lemin.h"
 
-static void 	verif_start(t_lemin *e, enum pos *d)
+static void		verif_start(t_lemin *e, enum pos *d)
 {
-	char *line;
+	char	*line;
 
 	if (e->start != NULL || e->end != NULL)
 		exit(-1);
-	while (get_next_line(0, &line) > 0) 
+	while (get_next_line(0, &line) > 0)
 	{
 		if (line[0] != '#')
-			break;
+			break ;
 		ft_strdel(&line);
 	}
-	if (line[0] == 'L'|| line[0] == '#')
-		exit (-1);
+	if (line[0] == 'L' || line[0] == '#')
+		exit(-1);
 	e->st = 1;
 	parsing_rooms(line, e, d);
 	ft_strdel(&line);
@@ -21,31 +33,31 @@ static void 	verif_start(t_lemin *e, enum pos *d)
 
 static void		verif_end(t_lemin *e, enum pos *d)
 {
-	char *line;
+	char	*line;
 
-	if (e->start == NULL ||  e->end != NULL)
+	if (e->start == NULL || e->end != NULL)
 		exit(-1);
-	while (get_next_line(0, &line) > 0) 
+	while (get_next_line(0, &line) > 0)
 	{
 		if (line[0] != '#')
-			break;
+			break ;
 		ft_strdel(&line);
 	}
-	if (line[0] == 'L'|| line[0] == '#')
+	if (line[0] == 'L' || line[0] == '#')
 		exit(-1);
 	e->nd = 1;
 	parsing_rooms(line, e, d);
 	ft_strdel(&line);
 }
 
-void	parsing_glob(t_lemin *e, char *line, enum pos *d, int n)
+void			parsing_glob(t_lemin *e, char *line, enum pos *d, int n)
 {
 	if (line[0] == '#' && line[1] != '#')
 		n = 1;
 	else if (!ft_strcmp(line, "##start"))
 		verif_start(e, d);
 	else if (!ft_strcmp(line, "##end"))
- 		verif_end(e, d);
+		verif_end(e, d);
 	else if (*d == ANTS && n != 1)
 	{
 		parsing_ants(e, line);
@@ -57,11 +69,11 @@ void	parsing_glob(t_lemin *e, char *line, enum pos *d, int n)
 		parsing_links(line, e);
 }
 
-t_rooms	 **table_rooms(t_lemin *e)
+t_rooms			**table_rooms(t_lemin *e)
 {
-	t_rooms **r;
-	int i;
-	t_rooms *ro;
+	t_rooms		**r;
+	int			i;
+	t_rooms		*ro;
 
 	ro = e->r;
 	i = 0;
@@ -77,10 +89,10 @@ t_rooms	 **table_rooms(t_lemin *e)
 	return (r);
 }
 
-int					reader(t_lemin *e)
+int				reader(t_lemin *e)
 {
-	char 	*line;
-	enum 	pos d;
+	char		*line;
+	enum pos	d;
 
 	d = ANTS;
 	e->nb_rooms = 0;
@@ -90,8 +102,6 @@ int					reader(t_lemin *e)
 		parsing_glob(e, line, &d, 0);
 		ft_strdel(&line);
 	}
-// add_end_start(e);
-// 	ft_putchar('a');
 	if (e->nb_ants <= 0 || !e->end || !e->start || !e->l)
 		exit(-1);
 	parsing_duplicate_rooms(e->r, e->r);
@@ -101,6 +111,6 @@ int					reader(t_lemin *e)
 	e->nb_end = e->end->nb_rooms;
 	created_hastable(e);
 	e->nb_start = e->start->nb_rooms;
-	e->nb_end = e->end->nb_rooms; 
+	e->nb_end = e->end->nb_rooms;
 	return (0);
 }

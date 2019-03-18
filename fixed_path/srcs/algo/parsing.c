@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/18 10:49:24 by agesp             #+#    #+#             */
+/*   Updated: 2019/03/18 10:50:07 by agesp            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lemin.h"
 
 void		parsing_links_unknow(t_links *l, t_rooms *r)
 {
-	t_rooms *tmp;
-	int 	i;
+	t_rooms		*tmp;
+	int			i;
 
 	tmp = r;
 	while (l)
@@ -22,27 +34,26 @@ void		parsing_links_unknow(t_links *l, t_rooms *r)
 	}
 }
 
-void 		parsing_duplicate_rooms(t_rooms *r, t_rooms *v)
+void		parsing_duplicate_rooms(t_rooms *r, t_rooms *v)
 {
-	int 	i;
-	t_rooms *tmp;
-	
-	i =0;
+	int			i;
+	t_rooms		*tmp;
 
+	i = 0;
 	tmp = r;
 	if (tmp)
-	while (v->next != NULL)
-	{
-		r = tmp;
-		while (r->next != NULL)
+		while (v->next != NULL)
 		{
-			if (!ft_strcmp(v->name, r->name))
-				i++;
-			if (i > 1)
-				exit(-1);
-			r = r->next;
+			r = tmp;
+			while (r->next != NULL)
+			{
+				if (!ft_strcmp(v->name, r->name))
+					i++;
+				if (i > 1)
+					exit(-1);
+				r = r->next;
+			}
+			i = 0;
+			v = v->next;
 		}
-		i = 0;
-		v = v->next;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/15 16:32:32 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/18 10:46:33 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,76 +26,6 @@ void		reset_tab(t_lemin *e)
 	}
 	e->visited[i] = e->find_new[i];
 	e->visited[e->nb_start] = 1;
-}
-
-int			paths_remain(t_lemin *e)
-{
-	int i;
-
-	i = 0;
-	while (i < e->nb_rooms)
-	{
-		if (e->map[e->nb_start][i] == 1 && !e->find_new[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int			is_stack_empty(int *stack, int len)
-{
-	int i;
-
-	i = 0;
-	while (i < len)
-	{
-		if (stack[i] != -1)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void		set_bfs_base_var(t_lemin *e)
-{
-	int i;
-
-	i = -1;
-	e->nb_paths = 0;
-	e->stack = malloc(sizeof(int) * e->nb_rooms - 1);
-	e->visited = malloc(sizeof(int) * e->nb_rooms);
-	e->prev = malloc(sizeof(int) * e->nb_rooms);
-	e->find_new = malloc(sizeof(int) * e->nb_rooms);
-	if (!e->stack || !e->visited || !e->prev || !e->find_new)
-		return ;
-	if (!(e->p = malloc(sizeof(t_path))))
-		return ;
-	e->p->path = NULL;
-	e->p->next = NULL;
-	while (++i < e->nb_rooms)
-		e->find_new[i] = 0;
-}
-
-void		print_paths(t_lemin *e, t_path *sa)
-{
-	int i;
-
-	e->p = sa;
-	while (e->p)
-	{
-		ft_printf("\npath_len : %d\n", e->p->size_path);
-		i = -1;
-		while (++i < e->p->size_path - 1)
-			ft_printf("%d->", e->p->path[i]);
-		ft_printf("%d\n", e->p->path[e->p->size_path - 1]);
-		i = -1;
-		while (++i < e->p->size_path - 1)
-			ft_printf("%s->", e->table_r[e->p->path[i]]->name);
-		ft_printf("%s\n\n", e->table_r[e->p->path[e->p->size_path - 1]]->name);
-		if (!e->p->next)
-			break ;
-		e->p = e->p->next;
-	}
 }
 
 void		discover_more_paths(t_lemin *e, t_path *s)
@@ -129,12 +59,24 @@ void		discover_more_paths(t_lemin *e, t_path *s)
 
 void		create_single(t_lemin *e)
 {
-	if (!(e->p->path = malloc(sizeof(int) * 2)))
-		exit(-1);
-	e->p->path[0] = e->nb_start;
-	e->p->path[1] = e->nb_end;
-	e->p->next = NULL;
-	e->p->size_path = 2;
+	if (e->map[e->nb_start][e->nb_end] == 1)
+	{
+		if (!(e->p->path = malloc(sizeof(int) * 2)))
+			exit(-1);
+		e->p->path[0] = e->nb_start;
+		e->p->path[1] = e->nb_end;
+		e->p->next = NULL;
+		e->p->size_path = 2;
+	}
+}
+
+void		control_stack(t_lemin *e)
+{
+	e->y = -1;
+	while (++e->y < e->nb_rooms)
+		if (e->map[e->x][e->y] == 1 && !e->visited[e->y])
+			push_stack(e);
+	e->x = e->stack[0];
 }
 
 void		bfs(t_lemin *e)
@@ -142,26 +84,15 @@ void		bfs(t_lemin *e)
 	t_path *save;
 
 	set_bfs_base_var(e);
+	create_single(e);
 	save = e->p;
-	while (paths_remain(e))
+	while (paths_remain(e) && e->map[e->nb_start][e->nb_end] == 0)
 	{
-		if (e->map[e->nb_start][e->nb_end] == 1)
-		{
-			create_single(e);
-			break ;
-		}
 		e->x = e->nb_start;
 		reset_tab(e);
 		while (e->x != e->nb_end)
 		{
-			e->y = 0;
-			while (e->y < e->nb_rooms)
-			{
-				if (e->map[e->x][e->y] == 1 && !e->visited[e->y])
-					push_stack(e);
-				e->y++;
-			}
-			e->x = e->stack[0];
+			control_stack(e);
 			if (e->x == e->nb_end || is_stack_empty(e->stack, e->nb_rooms - 1))
 				break ;
 			e->visited[e->x] = 1;

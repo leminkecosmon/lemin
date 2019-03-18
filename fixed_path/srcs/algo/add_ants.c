@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   add_ants.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/18 09:32:33 by agesp             #+#    #+#             */
+/*   Updated: 2019/03/18 09:33:49 by agesp            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/lemin.h"
 
-static t_ants	*new_ants(void)
+static t_ants		*new_ants(void)
 {
 	t_ants	*tmp;
 
@@ -31,7 +43,7 @@ static void			add_ants(t_lemin *e, int i)
 	}
 }
 
-void		parsing_ants(t_lemin *e, char *line)
+void				parsing_ants(t_lemin *e, char *line)
 {
 	int		i;
 

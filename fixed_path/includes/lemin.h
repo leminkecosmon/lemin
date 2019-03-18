@@ -100,7 +100,7 @@ typedef struct 		s_path
 }					t_path;
 void 		affiche_map(t_lemin *e, int **map);
 
-int				**created_map(t_lemin *e);
+void			created_map(t_lemin *e);
 int				reader(t_lemin *e);
 int				router_links(t_lemin **e, char *line);
 t_rooms			*created_lst(void);
@@ -123,5 +123,11 @@ void			push_stack(t_lemin *e);
 void			visu(t_lemin *l);
 void			move_ants_forward(t_lemin *e);
 void 			add_end_start(t_lemin *e);
+t_rooms			*new_rooms(void);
+void			coor_room(char *line, int i);
+int				paths_remain(t_lemin *e);
+int				is_stack_empty(int *stack, int len);
+void			set_bfs_base_var(t_lemin *e);
+void			print_paths(t_lemin *e, t_path *sa);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:41:53 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/15 16:32:13 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/18 10:51:51 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		pop_stack(t_lemin *e, int nb_rooms)
 		i++;
 	}
 	e->stack[i - 1] = -1;
-}	
+}
 
 void		push_stack(t_lemin *e)
 {
@@ -38,9 +38,9 @@ void		push_stack(t_lemin *e)
 	}
 	e->prev[e->y] = e->x;
 	e->stack[i] = e->y;
-}	
+}
 
-void	create_path(t_lemin *e, int *pa, int len)
+void		create_path(t_lemin *e, int *pa, int len)
 {
 	int j;
 
@@ -77,7 +77,7 @@ int			get_nb_links(t_lemin *e, int x)
 	return (links);
 }
 
-int		add_path(t_lemin *e)
+int			add_path(t_lemin *e)
 {
 	int i;
 	int save;
@@ -99,12 +99,8 @@ int		add_path(t_lemin *e)
 	}
 	save = i;
 	while (i < e->nb_rooms)
-	{
-		path[i] = 0;
-		i++;
-	}
+		path[i++] = 0;
 	create_path(e, path, save);
 	i = next_path == -1 ? path[0] : next_path;
-	//ft_printf("to_block : %d\n", i);
 	return (next_path == -1 ? path[0] : next_path);
 }

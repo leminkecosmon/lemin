@@ -29,12 +29,14 @@ SRC_ALGO	=	main.c\
 				created_hash.c\
 				created_path.c\
 				path_creation_utils.c\
+				path_creation_utils_2.c\
 				visu.c\
 				design.c\
 				event.c\
 				image.c\
 				view_map.c\
 				move_ants.c\
+				room_cre_utils.c\
 				
 OBJ_ALGO	=	$(SRC_ALGO:.c=.o)
 

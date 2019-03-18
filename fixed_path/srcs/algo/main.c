@@ -80,7 +80,7 @@ int			main(int ac, char const *av[])
 		return (0);
 	}
 	reader(e);
-	e->map = created_map(e);
+	created_map(e);
 	affiche_map(e, e->map);
 	bfs(e);
 	ft_printf("uu");

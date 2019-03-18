@@ -3,8 +3,8 @@
 void	 	draw_breseham(int yi, int xi, int yf, int xf, t_mlx *v)
 {
 	int dx,dy,i,xinc,yinc,cumul,x,y ;
- 	x = xi ;
- 	y = yi ;
+	x = xi ;
+	y = yi ;
 	dx = xf - xi ;
 	dy = yf - yi ;
 	xinc = ( dx > 0 ) ? 1 : -1 ;
@@ -16,8 +16,8 @@ void	 	draw_breseham(int yi, int xi, int yf, int xf, t_mlx *v)
 	if ( dx > dy ) 
 	{
 		cumul = dx / 2 ;
-    	while (++i < dx) 
-    	{
+		while (++i < dx) 
+		{
 			x += xinc ;
 			cumul += dy ;
 			if ( cumul >= dx ) 
@@ -25,7 +25,7 @@ void	 	draw_breseham(int yi, int xi, int yf, int xf, t_mlx *v)
 				cumul -= dx ;
 				y += yinc ; 
 			}
-      		img_pixel_put(v, x, y) ; 
+			img_pixel_put(v, x, y) ; 
 		} 
 	}
 	else 
@@ -41,8 +41,8 @@ void	 	draw_breseham(int yi, int xi, int yf, int xf, t_mlx *v)
 				cumul -= dy ;
 				x += xinc ; 
 			}
-    	  img_pixel_put(v, x, y) ; 
-  		} 
+			img_pixel_put(v, x, y) ; 
+		} 
 	}
 }
 
@@ -188,6 +188,6 @@ void 		viewer(t_mlx *v)
 	}
 	design_windows(v);
 	mlx_put_image_to_window(v->mlx_ptr, v->win_ptr, v->image->img,
-	0, 0);
+			0, 0);
 	info(v);
 }

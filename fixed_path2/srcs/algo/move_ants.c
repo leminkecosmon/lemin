@@ -107,6 +107,7 @@ void 	call_paht(t_lemin *e, t_ants **a, t_path *p)
 			if (p->stop == 4)
 				break ;
 			p->conti = 2;
+			// recuperer les vrai chemin si il y a 
 			if (!(count = take_better_path(p, e, e->map)))
 				break ;
 		}
@@ -202,6 +203,7 @@ void	move_ants_forward(t_lemin *e)
 	p = e->p;
 	while (p)
 	{
+		// recherche de path
 		call_paht(e, &a, p);
 		if (!a)
 			break ;
@@ -211,8 +213,10 @@ void	move_ants_forward(t_lemin *e)
 			p = p->next;
 	}
 	p = e->p;
+	// free tous les path non valide
 	free_path(&p);
 	p = e->p;
+	// l'endroit ou il faut travaillez pour la repartition des des fourmis
 	malloc_move(e, p);
 	a = e->a;
 	a->p->i = 1;

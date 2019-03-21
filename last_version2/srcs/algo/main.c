@@ -102,8 +102,7 @@ int			main(int ac, char const *av[])
 		e->map_v[i] = NULL;
 		i++;
 	}
-		i = 0;
-
+	i = 0;
 	move_ants_forward(e);
 
 	while (av[i])

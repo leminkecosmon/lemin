@@ -188,7 +188,9 @@ void	move_ants_forward(t_lemin *e)
 				e->table_r[a->p->path[a->p->i]]->occuped = 0;
 			else
 				e->table_r[a->p->path[a->p->i]]->occuped = 2;
-			tmp = ft_strjoin(ft_itoa(a->nb_ants), e->table_r[a->p->path[a->p->i]]->name);
+			tmp = ft_strjoin("L", ft_itoa(a->nb_ants));
+			tmp = ft_strjoin(tmp, "-");
+			tmp = ft_strjoin(tmp, e->table_r[a->p->path[a->p->i]]->name);
 			if (e->map_v[i])
 			{
 				e->map_v[i] = ft_strjoin(e->map_v[i], " ");
@@ -202,6 +204,7 @@ void	move_ants_forward(t_lemin *e)
 		}
 		if (a->next == NULL && not_all_printed(e->a))
 		{
+			i++;
 			if (a->nb_ants == 4)
 				e->table_r[a->p->path[a->p->i]]->occuped = 0;
 			ft_putchar('\n');
@@ -216,7 +219,6 @@ void	move_ants_forward(t_lemin *e)
 	// while (e->map_v[i])
 	// {
 	// 	ft_putendl(e->map_v[i]);
-	// 	i++;
 	// 	i++;
 	// }
 }

@@ -20,14 +20,15 @@ int			deal_key(int key, t_mlx *v)
 		v->affiche = 1;
 	if (key == 21)
 		v->affiche = 0;
-	if (key == 22)
+	if (key == 18)
 		v->name = 1;
-	if (key == 23)
+	if (key == 19)
 		v->name = 0;
 	if (key == 124)
 		v->e->n++;
 	if (key == 123)
 		v->e->n--;
+	ft_putnbr(key);
 	viewer(v);
 	mlx_clear_window(v->mlx_ptr, v->win_ptr);
 	design_windows(v);

@@ -12,6 +12,8 @@
 
 #include "visual.h"
 
+#include "visual.h"
+
 void	 	draw_breseham(int yi, int xi, int yf, int xf, t_mlx *v)
 {
 	int dx,dy,i,xinc,yinc,cumul,x,y ;
@@ -210,7 +212,7 @@ int 		max(t_lemin *e)
 
 void 		move_ants(t_mlx *v, t_lemin *e)
 {
-	int i;
+	size_t i;
 	int key;
 	int x;
 	int y;
@@ -223,7 +225,7 @@ void 		move_ants(t_mlx *v, t_lemin *e)
 	len = 0;
 	str = NULL;
 	i = 0;
-	while (i < (int)ft_strlen(e->map_v[e->n]))
+	while (i < ft_strlen(e->map_v[e->n]))
 	{
 		if (e->map_v[e->n][i] == 'L')
 			i++;
@@ -237,12 +239,11 @@ void 		move_ants(t_mlx *v, t_lemin *e)
 		str = ft_strsub(e->map_v[e->n], i, len);
 		i += len;
 		key = generate_hash(str, e->nb_rooms);
+		ft_strdel(&str);
 		x = e->h[key]->r->x; 
-		y = e->h[key]->r->y; 
+		y = e->h[key]->r->y;
 		v->d = init_design(x, y, y + 15, x + 15);
 		function_color(v->d, v);
-		mlx_string_put(v->mlx_ptr, v->win_ptr\
-			, x, y, 0x00FFFFFF, ft_itoa(nb));
 		i++;
 	}
 }

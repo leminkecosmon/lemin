@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/03/18 10:46:33 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/21 13:26:40 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ void		bfs(t_lemin *e)
 		e->find_new[add_path(e)] = 1;
 		discover_more_paths(e, save);
 	}
-	print_paths(e, save);
+//	print_paths(e, save);
 	e->p = save;
 }

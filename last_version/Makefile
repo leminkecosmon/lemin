@@ -1,7 +1,7 @@
-CC			=	clang
+CC			=	gcc
 NAME		=	lem-in
 VISU		=	visu
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -Werror -ggdb
 LIBDIR		=	libft
 LIBLINK		=	-L $(LIBDIR) -lft
 LIB 		=	$(LIBDIR)/libft.a

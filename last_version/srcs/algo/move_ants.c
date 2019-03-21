@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/03/12 16:56:08 by kecosmon 	      ###   ########.fr       */
+/*   Updated: 2019/03/21 13:59:15 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void 	malloc_move(t_lemin *e, t_path *p)
 				break;
 		}
 		if (tmp && tmp->size_path > e->nb_ants - a->nb_ants && tmp->conti == 1\
-		 	&& (p->size_path - 2) > e->nb_ants - a->nb_ants && p->next != NULL\
+		 	&& (p->size_path - 1) > e->nb_ants - a->nb_ants && p->next != NULL\
 		 	&& p->size_path != tmp->size_path)
 		{
 				tmp->conti = 0;
@@ -133,6 +133,17 @@ void 	malloc_move(t_lemin *e, t_path *p)
 			p = p->next;
 		}
 	}
+}
+
+int		not_all_printed(t_ants *a)
+{
+	while (a)
+	{
+		if (a->p->i != a->p->size_path)
+			return (1);
+		a = a->next;
+	}
+	return (0);
 }
 
 void	move_ants_forward(t_lemin *e)
@@ -161,7 +172,7 @@ void	move_ants_forward(t_lemin *e)
 	a = e->a;
 	while (a)
 	{
-		if (e->table_r[a->p->path[a->p->i]]->occuped != 2 && a->p->i < a->p->size_path)
+		if (a->p->i < a->p->size_path && e->table_r[a->p->path[a->p->i]]->occuped != 2)
 		{
 			if (a->p->i + 1 == a->p->size_path)
 				e->table_r[a->p->path[a->p->i]]->occuped = 0;
@@ -179,7 +190,7 @@ void	move_ants_forward(t_lemin *e)
 			ft_printf("L%d-%s ", a->nb_ants, e->table_r[a->p->path[a->p->i]]->name);
 			a->p->i++;
 		}
-		if (a->next == NULL && a->p->i < a->p->size_path)
+		if (a->next == NULL && not_all_printed(e->a))
 		{
 			if (a->nb_ants == 4)
 				e->table_r[a->p->path[a->p->i]]->occuped = 0;
@@ -192,7 +203,6 @@ void	move_ants_forward(t_lemin *e)
 	}
 	e->map_v[i] = NULL;
 	i = 0;
-	ft_putchar('\n');
 	while (e->map_v[i])
 	{
 		ft_putendl(e->map_v[i]);

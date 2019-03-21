@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/03/18 10:46:33 by kecosmon         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:36:36 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "lemin.h"
@@ -43,6 +43,10 @@ void	copy_to_tab(t_lemin *e, t_links *l)
 	{
 		key2 = generate_hash(l->s2, e->nb_rooms);
 		key1 = generate_hash(l->s1, e->nb_rooms);
+		while (ft_strcmp(l->s2, e->h[key2]->r->name))
+			key2++;
+		while (ft_strcmp(l->s1, e->h[key1]->r->name))
+			key1++;
 		e->map[e->h[key1]->r->nb_rooms][e->h[key2]->r->nb_rooms] = 1;
 		e->map[e->h[key2]->r->nb_rooms][e->h[key1]->r->nb_rooms] = 1;
 		l = l->next;

@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/03/21 13:54:11 by agesp            ###   ########.fr       */
+/*   Updated: 2019/03/21 14:31:58 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void		init_hash(t_lemin *e)
 	while (r)
 	{
 		key = generate_hash(r->name, e->nb_rooms);
+		while (e->h[key])
+			key++;
 		if (e->h[key])
 			ft_putendl("ici->");
 		e->h[key] = created_lst_hash(r);

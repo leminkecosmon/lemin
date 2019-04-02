@@ -6,12 +6,11 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/04/02 12:05:02 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/02 16:37:03 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
-#include <stdio.h>
+#include "lemin.h"
 
 void		set_map(t_lemin *e)
 {
@@ -71,7 +70,6 @@ void		bfs(t_lemin *e)
 	}
 	e->p = save;
 	e->p->steps = get_len(e);
-	ft_printf("len %d\n", get_len(e));
 }
 
 int			copy_path(t_lemin *e)
@@ -122,5 +120,6 @@ void		setup_map(t_lemin *e)
 			break ;
 		ft_bzero(e->find_new, e->nb_rooms * sizeof(int));
 	}
-	e->p = e->select_p;
+	if (e->map[e->start->id_r][e->end->id_r] == 0)
+		e->p = e->select_p;
 }

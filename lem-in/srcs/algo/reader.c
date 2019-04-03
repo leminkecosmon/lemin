@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/03/18 10:46:33 by kecosmon         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:46:33 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void			reader(t_lemin *e)
 	}
 	links_rooms(e);
 	if (!e->end || !e->start)
-		exit(-1);
+		lem_in_error(e, 8);
 }

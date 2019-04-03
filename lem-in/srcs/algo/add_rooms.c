@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/03/18 10:46:33 by kecosmon         ###   ########.fr       */
+/*   Updated: 2019/04/03 15:10:39 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void				rooms(char *line, t_lemin *e, enum pos *d)
 	else	
 	{
 		*d = LINKS;
+		if (!e->r)
+			lem_in_error(e, 11);
 		created_hastable(e);
 		e->table_r = table_rooms(e);
 		parsing_links(line, e);

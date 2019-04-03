@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 12:38:39 by agesp             #+#    #+#             */
-/*   Updated: 2019/04/03 13:47:42 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/03 14:32:31 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,13 @@ void			free_hash(t_lemin *e)
 	int i;
 
 	i = -1;
-	while (e->h[++i])
+	if (e->h)
 	{
-		free_rooms(e->h[i]->r);
-		free(e->h[i]);
+		while (e->h[++i])
+		{
+			free_rooms(e->h[i]->r);
+			free(e->h[i]);
+		}
+		free(e->h);
 	}
-	free(e->h);
 }	

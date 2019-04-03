@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:37:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/03 15:21:51 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/03 15:25:17 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 static void		error_messages(int error)
 {
-	error == 1 ? write(1, "Error: malloc failure\n", 22) : 0;
-	error == 2 ? write(1, "Error: ' ' or '-' before or after ants\n", 39) : 0;
-	error == 3 ? write(1, "Error: negative, too many, or no ants\n", 38) : 0;
-	error == 4 ? write(1, "Error: comment after ##start or ##end\n", 38) : 0;
-	error == 5 ? write(1, "Error: ants badly formatted\n", 28) : 0;
-	error == 6 ? write(1, "Error: room starts with 'L' or '#'\n", 35) : 0;
-	error == 7 ? write(1, "Error: more than 1 start or end room\n", 37) : 0;
-	error == 8 ? write(1, "Error: start or end\n", 20) : 0;
-	error == 10 ? write(1, "Error: room links to self\n", 27) : 0;
-	error == 11 ? write(1, "Error: no rooms\n", 17) : 0;
-	error == 12 ? write(1, "Error: no links or empty map\n", 29) : 0;
-	error == 13 ? write(1, "Error: no path\n", 15) : 0;
-	error == 14 ? write(1, "Error: link to unknown room\n", 28) : 0;
-	error == 15 ? write(1, "Error: coordinates\n", 19) : 0;
-	error == 16 ? write(1, "Error: duplicate rooms\n", 23) : 0;
-	error == 18 ? write(1, "Error: too many arguments\n", 26) : 0;
+	error == 1 ? ft_printf("Error: malloc failure\n") : 0;
+	error == 2 ? ft_printf("Error: ' ' or '-' before or after ants\n") : 0;
+	error == 3 ? ft_printf("Error: negative, too many, or no ants\n") : 0;
+	error == 4 ? ft_printf("Error: comment after ##start or ##end\n") : 0;
+	error == 5 ? ft_printf("Error: ants badly formatted\n") : 0;
+	error == 6 ? ft_printf("Error: room starts with 'L' or '#'\n") : 0;
+	error == 7 ? ft_printf("Error: more than 1 start or end room\n") : 0;
+	error == 8 ? ft_printf("Error: start or end\n") : 0;
+	error == 10 ? ft_printf("Error: room links to self\n") : 0;
+	error == 11 ? ft_printf("Error: no rooms\n") : 0;
+	error == 12 ? ft_printf("Error: no links or empty map\n") : 0;
+	error == 13 ? ft_printf("Error: no path\n") : 0;
+	error == 14 ? ft_printf("Error: link to unknown room\n") : 0;
+	error == 15 ? ft_printf("Error: coordinates\n") : 0;
+	error == 16 ? ft_printf("Error: duplicate rooms\n") : 0;
+	error == 18 ? ft_printf("Error: too many arguments\n") : 0;
 }
 
 void			lem_in_error(t_lemin *e, int error)
@@ -40,7 +40,7 @@ void			lem_in_error(t_lemin *e, int error)
 	if (error > 0)
 		error_messages(error);
 	else if (error != -2)
-		write(1, "Error\n", 6);
+		ft_printf("Error\n", 6);
 	if (e->i)
 		free_info(e);
 	if (e->map)

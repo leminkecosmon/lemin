@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:26:19 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/02/22 15:26:21 by kecosmon         ###   ########.fr       */
+/*   Updated: 2019/04/03 13:36:33 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	*ft_memalloc(size_t size)
 {
-	char *zonemem;
+	void *zonemem;
 
-	zonemem = (char *)malloc(size * sizeof(zonemem));
-	if (zonemem == NULL)
-		return (NULL);
+	if (!(zonemem = (char *)malloc(size)))
+			return (NULL);
 	ft_bzero(zonemem, size);
 	return (zonemem);
 }

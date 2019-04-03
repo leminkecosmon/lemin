@@ -94,6 +94,8 @@ SRCS=ft_memset.c\
 	itoa_base.c\
 	ft_atoi_adv.c\
 	ft_intcpy.c\
+	ft_strichr.c\
+	ft_atoii.c\
 	
 OBJS= $(SRCS:.c=.o)
 
@@ -101,12 +103,10 @@ FLAGS=-Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(OBJ) $(SRC)
 	@gcc -c $(FLAGS) $(SRCS) 
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
-
-.PHONY: all clean fclean re
 
 clean:
 	@rm -rf $(OBJS)
@@ -115,3 +115,5 @@ fclean: clean
 	@rm -rf $(NAME) 
 
 re: fclean all
+
+.PHONY: all clean fclean re

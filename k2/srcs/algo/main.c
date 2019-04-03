@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:37:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/02 17:09:04 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/03 13:49:38 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,48 +32,6 @@ static void		error_messages(int error)
 	error == 18 ? write(1, "Error: too many arguments\n", 26) : 0;
 }
 
-void			free_ants(t_lemin *e)
-{
-	t_ants *a;
-
-	while (e->a)
-	{
-		a = e->a;
-		e->a = e->a->next;
-		free(a);
-	}
-}
-
-void			path_fun_free(t_lemin *e)
-{
-	if (e->p)
-		free_path(e->p, 0);
-	if (e->find_new)
-	{
-		free(e->stack);
-		free(e->map_stack);
-		free(e->find_new);
-		free(e->map_fn);
-		free(e->prev);
-		free(e->map_prev);
-		free(e->map_visited);
-	}
-}
-
-void			free_info(t_lemin *e)
-{
-	t_info *i;
-
-	while (e->i)
-	{
-		i = e->i;
-		e->i = e->i->next;
-		if (i->line)
-			free(i->line);
-		free(i);
-	}
-}
-
 void			lem_in_error(t_lemin *e, int error)
 {
 	int i;
@@ -92,17 +50,26 @@ void			lem_in_error(t_lemin *e, int error)
 		free(e->map);
 	}
 	if (e->r)
-		while (e->r && (e->r = e->r->next))
-		{
-			ft_strdel(&(e->r->name)); //TO_FREE !!!
-			free(e->r->links);
-		}
+		free_rooms(e->r);
 	path_fun_free(e);
 	free_ants(e);
+	free_hash(e);
 	free(e);
 	if (error == -2)
 		exit(1);
 	exit(0);
+}
+
+void		print_info(t_lemin *e)
+{
+	while (e->i)
+	{
+		ft_printf("%s\n", e->i->line);
+		if (!e->i->next)
+			break ;
+		e->i = e->i->next;
+	}
+	ft_printf("\n");
 }
 
 int			main(int ac, char const *av[])
@@ -114,15 +81,18 @@ int			main(int ac, char const *av[])
 	if (ac < 1 && av)
 	{
 		ft_putstr("usage: lem-in ,[maps...]");
-		return (0);
+		lem_in_error(e, 18);
 	}
 	reader(e);
-	setup_map(e);
+	print_info(e);
+/*	setup_map(e);
 	e->max_lines = get_len(e);
 	move_ants_forward(e);
+	if (e->p->size_path == 2)
+		ft_printf("\n\nsent %d ants directly from start to end", e->nb_ants);
+	else
 	ft_printf("\n\nsent %d ants through %d paths in %d steps\n",\
-			e->nb_ants, e->nb_paths, \
-			e->p->size_path == 2 ? 1 : e->max_lines);
+			e->nb_ants, e->nb_paths, e->max_lines);*/
 	lem_in_error(e, -2);
 	return (0);
 }

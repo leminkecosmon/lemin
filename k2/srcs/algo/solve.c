@@ -6,7 +6,7 @@
 // /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 // /*                                                +#+#+#+#+#+   +#+           */
 // /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-// /*   Updated: 2019/03/21 14:24:19 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/03 13:13:07 by agesp            ###   ########.fr       */
 // /*                                                                            */
 // /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // int 	one_path(t_lemin *e)
 // {
-// 	if (!(e->p = ft_memalloc(sizeof(t_lemin))))
+// 	if (!(e->p = malloc(sizeof(t_lemin))))
 // 		lem_in_error(e , 1);
 // 	e->p[0].size_path = 1;
 // 	e->p[0].r = e->start;
@@ -118,7 +118,7 @@
 // {
 // 	if (e->mat[e->start->id_r][e->end->id_r])
 // 		return (one_path(e));
-// 	if (!(e->p = ft_memalloc(sizeof(t_path) * e->start->nb_links + 1)))
+// 	if (!(e->p = malloc(sizeof(t_path) * e->start->nb_links + 1)))
 // 		lem_in_error(e , 1);
 // 	edmonds_karps(e);
 // 	return (e->nb_paths);

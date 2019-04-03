@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/04/02 16:37:03 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/03 13:48:04 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,19 @@ int			copy_path(t_lemin *e)
 	save = NULL;
 	if (e->p && e->p->steps == -1)
 	{
-		free_path(e->p, 0);
+		e->p = free_path(e->p, 0, e);
 		return (1);
 	}
 	if (!e->select_p || (e->select_p && e->select_p->steps > e->p->steps))
 	{
 		if (e->select_p)
-			e->select_p = free_path(e->select_p, 0);
+			e->select_p = free_path(e->select_p, 0, e);
 		e->select_p = e->p;
 		e->p = NULL;
-		e->p = free_path(e->p, 1);
+		e->p = free_path(e->p, 1, e);
 	}
 	else
-		e->p = free_path(e->p, 1);
+		e->p = free_path(e->p, 1, e);
 	return (0);
 }
 
@@ -120,6 +120,10 @@ void		setup_map(t_lemin *e)
 			break ;
 		ft_bzero(e->find_new, e->nb_rooms * sizeof(int));
 	}
+	if (!e->select_p && !e->p)
+		lem_in_error(e, 13);
+	if (e->p)
+		free_path(e->p, 0, e);
 	if (e->map[e->start->id_r][e->end->id_r] == 0)
 		e->p = e->select_p;
 }

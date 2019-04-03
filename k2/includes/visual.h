@@ -6,14 +6,14 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:59:12 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/02/22 15:59:14 by kecosmon         ###   ########.fr       */
+/*   Updated: 2019/04/03 11:51:29 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VISUAL_H
 # define VISUAL_H
 # include "libft.h"
-# include "../minilibx_macos/mlx.h"
+# include "mlx.h"
 # define WIDTH 1400
 # define HEIGHT 1200
 # include "lemin.h"

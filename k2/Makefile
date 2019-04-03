@@ -1,11 +1,10 @@
 CC			=	gcc
 NAME		=	lem-in
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -Werror -ggdb
 LIBDIR		=	libft
 LIBLINK		=	-L $(LIBDIR) -lft
 LIB 		=	$(LIBDIR)/libft.a
-LIB_VISU	=	-framework Opengl -framework AppKit
-
+LIB_VISU	=	-I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit 
 INCLUDES	= 	-I ./includes
 INCLUDE		=	./includes
 INCLUDEL	=	-I ./$(LIBDIR)/
@@ -38,6 +37,7 @@ SRC_ALGO	=	add_info.c \
 				view_map.c \
 				visu.c\
 				add_ants.c\
+				free_func.c\
 
 OBJ_ALGO	=	$(SRC_ALGO:.c=.o)
 
@@ -47,7 +47,7 @@ OBJS_ALGO	=	$(addprefix $(OBJDIR_ALGO)/, $(SRC_ALGO:.c=.o))
 all: directory $(NAME) 
 
 $(NAME): $(OBJDIR_ALGO) $(LIB) $(OBJS_ALGO) $(INCLUDE)
-	@$(CC) $(FLAGS) srcs/algo/libmlx.a $(LIB) $(LIB_VISU)  -o $@ $(OBJS_ALGO) $(LIBLINK)
+	@$(CC) $(FLAGS) $(LIB) $(LIB_VISU)  -o $@ $(OBJS_ALGO) $(LIBLINK)
 
 $(LIB):
 	@make -C $(LIBDIR)

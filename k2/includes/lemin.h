@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/03/12 16:56:08 by kecosmon 	      ###   ########.fr       */
+/*   Updated: 2019/04/03 12:51:18 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,11 @@ void				reset_tab(t_lemin *e);
 void				reset_map_tab(t_lemin *e);
 void				create_single(t_lemin *e);
 void				control_stack(t_lemin *e, int x);
-t_path				*free_path(t_path *p, int realloc);
+t_path				*free_path(t_path *p, int realloc, t_lemin *e);
+void				free_ants(t_lemin *e);
+void				path_fun_free(t_lemin *e);
+void				free_info(t_lemin *e);
+void				free_rooms(t_rooms *p);
+void				free_hash(t_lemin *e);
+
 #endif

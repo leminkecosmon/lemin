@@ -26,7 +26,7 @@ void	img_pixel_put(t_mlx *e, int x, int y)
 
 void	clear_image(t_mlx *e)
 {
-		mlx_destroy_image(e->mlx_ptr, e->image->img);
+	mlx_destroy_image(e->mlx_ptr, e->image->img);
 	e->image->img = mlx_new_image(e->mlx_ptr, WIDTH, HEIGHT);
 	e->image->img_data = mlx_get_data_addr(e->image->img, &(e->image->img_bpp),
 		&(e->image->img_size_line), &(e->image->img_endian));

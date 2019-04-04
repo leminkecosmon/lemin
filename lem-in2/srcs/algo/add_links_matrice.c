@@ -26,7 +26,7 @@ int					**ft_malloc_matrix(t_lemin *e)
 	return (matrix);
 }
 
-void				init_map(t_lemin *e, char *s1, char *s2)
+int				init_map(t_lemin *e, char *s1, char *s2)
 {
 	int key1;
 	int key2;
@@ -34,7 +34,7 @@ void				init_map(t_lemin *e, char *s1, char *s2)
 	key1 = generate_hash(s1, e->nb_rooms);
 	key2 = generate_hash(s2, e->nb_rooms);
 	if (e->h[key1] == NULL || e->h[key2] == NULL)
-		lem_in_error(e, 14);
+		return (1);
 	while (0 != ft_strcmp(e->h[key1]->r->name, s1))
 		key1++;
 	while (0 != ft_strcmp(e->h[key2]->r->name, s2))
@@ -43,6 +43,7 @@ void				init_map(t_lemin *e, char *s1, char *s2)
 	e->h[key2]->r->nb_links++;
 	e->map[e->h[key1]->r->id_r][e->h[key2]->r->id_r] = 1;
 	e->map[e->h[key2]->r->id_r][e->h[key1]->r->id_r] = 1;
+	return (0);
 }
 
 void				links_rooms(t_lemin *e)
@@ -67,7 +68,7 @@ void				links_rooms(t_lemin *e)
 	}
 }
 
-void				parsing_links(char *line, t_lemin *e)
+int				parsing_links(char *line, t_lemin *e)
 {
 	int		i;
 	char	*s1;
@@ -78,7 +79,7 @@ void				parsing_links(char *line, t_lemin *e)
 	if (!(i = ft_strichr(line, '-')))
 	{
 		ft_strdel(&line);
-		lem_in_error(e, 12);
+		return (1);
 	}
 	s1 = name_rooms(e, line, '-');
 	if (!(s2 = ft_strdup(&line[++i])))
@@ -86,7 +87,9 @@ void				parsing_links(char *line, t_lemin *e)
 		ft_strdel(&line);
 		lem_in_error(e, 1);
 	}
-	init_map(e, s1, s2);
+	if (init_map(e, s1, s2))
+		return (1);
 	ft_strdel(&s1);
 	ft_strdel(&s2);
+	return (0);
 }

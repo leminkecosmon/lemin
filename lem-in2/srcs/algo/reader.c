@@ -42,7 +42,8 @@ static void		parsing_glob(t_lemin *e, char *line, enum pos *d, int n)
 	else if (*d == ROOMS && n != 1)
 		rooms(line, e, d);
 	else if (*d == LINKS)
-		parsing_links(line, e);
+		if (parsing_links(line, e))
+			e->stop = 1;
 }
 
 void			reader(t_lemin *e)
@@ -57,6 +58,8 @@ void			reader(t_lemin *e)
 		add_info(e, line);
 		parsing_glob(e, line, &d, 0);
 		ft_strdel(&line);
+		if (e->stop == 1)
+			break ;
 	}
 	if (d != LINKS)
 		lem_in_error(e, 12);

@@ -94,6 +94,7 @@ typedef struct 		s_lemin
 	int 			nb_rooms;
 	int				nb_paths;
 	int				n;
+	int 			stop;
 	char 			**map_v;
 	struct s_path	*select_p;
 	struct s_rooms  *r;
@@ -113,7 +114,7 @@ char				*name_rooms(t_lemin *e, char *line , char c);
 t_rooms				*new_rooms(t_lemin *e);
 void				parsing_rooms(t_lemin *e, char *line, int i);
 void				rooms(char *line, t_lemin *e, enum pos *d);
-void				parsing_links(char *line, t_lemin *e);
+int					parsing_links(char *line, t_lemin *e);
 t_rooms				**table_rooms(t_lemin *e);
 void				created_hastable(t_lemin *e);
 void				parsing_ants(t_lemin *e, char *line);

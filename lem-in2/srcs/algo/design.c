@@ -27,6 +27,7 @@ void		function_color(t_design *d, t_mlx *v)
 		}
 		d->y++;
 	}
+	free(d);
 }
 
 void		write_name_rooms(t_mlx *v)
@@ -44,18 +45,25 @@ void		write_name_rooms(t_mlx *v)
 
 void		info(t_mlx *v)
 {
+	char *tmp;
+
+	if (!(tmp = ft_itoa(v->e->nb_ants)))
+		free_visu(v);
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
 		, (WIDTH / 2) - 30 ,  30, 0xC7DBFF, "Lem-in");
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
-		, 55, HEIGHT - 100, 0x00FFFFFF, "< = arriere");
+		, 55, HEIGHT - 80, 0x00FFFFFF, "< = arriere");
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
-		, 300, HEIGHT - 100, 0x00FFFFFF, "> = avant");
+		, 300, HEIGHT - 80, 0x00FFFFFF, "> = avant");
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
-		, 600, HEIGHT - 50, 0x00FFFFFF, "3 = affiche name_rooms");
+		, 300, HEIGHT - 50, 0x00FFFFFF, "3 = affiche name_rooms");
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
-		, 55, HEIGHT - 50, 0x00FFFFFF, "nombre fourmis = ");
+		, 55, HEIGHT - 50, 0x00FFFFFF, "4 = cacher name_rooms");
 	mlx_string_put(v->mlx_ptr, v->win_ptr\
-		, 230, HEIGHT - 50, 0x00FFFFFF, ft_itoa(v->e->nb_ants));
+		, 590, HEIGHT - 50, 0x00FFFFFF, "nombre fourmis = ");
+	mlx_string_put(v->mlx_ptr, v->win_ptr\
+		, 760, HEIGHT - 50, 0x00FFFFFF, tmp);
+	free(tmp);
 	if (v->affiche == 1)
 		write_name_rooms(v);
 }
@@ -64,7 +72,8 @@ t_design	*init_design(int x, int y, int fy, int fx)
 {
 	t_design *d;
 
-	d = malloc(sizeof(t_design));
+	if (!(d = malloc(sizeof(t_design))))
+		exit(1);
 	d->fx = fx;
 	d->fy = fy;
 	d->x = x;

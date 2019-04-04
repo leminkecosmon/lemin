@@ -13,7 +13,7 @@
 #ifndef VISUAL_H
 # define VISUAL_H
 # include "libft.h"
-# include "mlx.h"
+# include "../minilibx_macos/mlx.h"
 # define WIDTH 1400
 # define HEIGHT 1200
 # include "lemin.h"
@@ -48,18 +48,15 @@ typedef	struct			s_mlx
 	void				*win_ptr;
 	void				*img;
 	int					color;
-	int 				pace;
 	int 				tmpspace;
 	int 				wspace;
 	int 				hspace;
 	int 				affiche;
 	int 				name;
-	char 				**mv_ants;
 	struct s_design		*d;
 	struct s_event		*even;
 	struct s_image		*image;
 	struct s_lemin 		*e;
-	struct s_ants 		*a;
 }						t_mlx;
 
 t_design				*init_design(int x, int y, int fy, int fx);
@@ -70,5 +67,12 @@ void					info(t_mlx *v);
 void					function_color(t_design *d, t_mlx *e);
 int						deal_key(int key, t_mlx *e);
 void 					viewer(t_mlx *v);
+void 					free_visu(t_mlx *v);
+void 					rooms_links(t_mlx *v, t_rooms *r, int i, int spacew);
+int 					max(t_lemin *e);
+void 					init_r(t_mlx *v, int size_path, int *path, int spacey);
+int 					init_start(t_mlx *v, int spacew);
+void					draw_breseham(int y, int x, int yf, int xf, t_mlx *v);
+void 					view_link(t_rooms *r, t_rooms *r2, t_mlx *v);
 
 #endif

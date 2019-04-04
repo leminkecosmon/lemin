@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:59:12 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/03 11:51:29 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:05:48 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef	struct			s_mlx
 	void				*img;
 	int					color;
 	int 				pace;
-	int 				tmpspacew;
+	int 				tmpspace;
 	int 				wspace;
 	int 				hspace;
 	int 				affiche;

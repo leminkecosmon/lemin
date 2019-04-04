@@ -6,11 +6,26 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/03 12:14:25 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:10:33 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+
+void 	zero_vistid(t_lemin *e)
+{
+	t_path *p;
+	int i;
+
+	p = e->p;
+	while (p)
+	{
+		i = -1;
+		while (++i < p->size_path)
+			e->table_r[p->path[i]]->occuped = 0;
+		p = p->next;
+	}
+}
 
 void			ft_alloc(t_lemin *e, t_path *p)
 {
@@ -36,7 +51,6 @@ void	malloc_move(t_lemin *e, t_path *p)
 	t_path *save;
 
 	a = e->a;
-	p = e->p;
 	while (a)
 	{
 		if (a && p->capacity)
@@ -67,16 +81,15 @@ int		not_all_printed(t_ants *a)
 	return (0);
 }
 
-void	move_ants_forward(t_lemin *e)
+void	move_ants_forward(t_lemin *e, t_path *p, t_ants *a)
 {
-	t_path *p;
-	t_ants *a;
+	char *tmp;
 	int i;
+
 	i = 0;
-	a = e->a;
-	p = e->p;
 	set_path_capacity(e);
 	malloc_move(e, p);
+	e->map_v = ft_memalloc(sizeof(char *)* e->nb_ants * e->nb_rooms);
 	while (a)
 	{
 		if (a->p->i < a->p->size_path && e->table_r[a->p->path[a->p->i]]->occuped != 2)
@@ -85,15 +98,17 @@ void	move_ants_forward(t_lemin *e)
 				e->table_r[a->p->path[a->p->i]]->occuped = 0;
 			else
 				e->table_r[a->p->path[a->p->i]]->occuped = 2;
-			// tmp = ft_strjoin(ft_itoa(a->nb_ants), e->table_r[a->p->path[a->p->i]]->name);
-			// if (e->map_v[i])
-			// {
-			// 	e->map_v[i] = ft_strjoin(e->map_v[i], " ");
-			// 	e->map_v[i] = ft_strjoin(e->map_v[i], tmp);
-			// }
-			// else
-			// 	e->map_v[i] = ft_strjoin("", tmp);
-			// ft_strdel(&tmp);
+			tmp = ft_strjoin("L", ft_itoa(a->nb_ants));
+			tmp = ft_strjoin(tmp, "-");
+			tmp = ft_strjoin(tmp, e->table_r[a->p->path[a->p->i]]->name);
+			if (e->map_v[i])
+			{
+				e->map_v[i] = ft_strjoin(e->map_v[i], " ");
+				e->map_v[i] = ft_strjoin(e->map_v[i], tmp);
+			}
+			else
+				e->map_v[i] = ft_strjoin("", tmp);
+			ft_strdel(&tmp);
 			ft_printf("L%d-%s ", a->nb_ants, e->table_r[a->p->path[a->p->i]]->name);
 			a->p->i++;
 		}
@@ -102,18 +117,20 @@ void	move_ants_forward(t_lemin *e)
 			if (a->nb_ants == 4)
 				e->table_r[a->p->path[a->p->i]]->occuped = 0;
 			ft_putchar('\n');
+			i++;
 			zero_vistid(e);
 			a = e->a;
 		}
 		else
 			a = a->next;
 	}
-	// e->map_v[i] = NULL;
-	// i = 0;
-	// while (e->map_v[i])
-	// {
-	// 	ft_putendl(e->map_v[i]);
-	// 	i++;
-	// 	i++;
-	// }
+	e->map_v[i] = 0;
+	i = 0;
+	// 		ft_putchar('\n');
+	// //
+	// 	while (e->map_v[i])
+	// 	{
+	// 		ft_putendl(e->map_v[i]);
+	// 		i++;
+	// 	}
 }

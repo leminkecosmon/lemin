@@ -37,14 +37,17 @@ do
 	COUNT=0
 	GEN="$(./generator --big)"
 	GOAL="$(echo "$GEN" | grep required | uniq | cut -d " " -f8)"
+	echo $GOAL
 	RES="$(echo "$GEN" | ./lem-in | grep "ants through" | cut -d " " -f8)"
+	echo $RES
 	DIFF=`expr $GOAL - $RES`
+	echo $DIFF
 	COUNT=`expr $COUNT + $DIFF`
 done
 	echo $COUNT
-	printf "Disparity between expectation/result with big for 10 different paths : %d\n" `expr $COUNT / 10`
+	printf "Disparity between expectation/result with big for 10 different paths : %.3f\n" "bc -l <<< $COUNT / 10"
 	
-for i in {1..11}
+for i in {1..6}
 do
 	COUNT=0
 	GEN="$(./generator --big-superposition)"
@@ -54,4 +57,4 @@ do
 	COUNT=`expr $COUNT + $DIFF`
 done
 	echo $COUNT
-	printf "Disparity between expectation/result with big-superposition for 10 different paths : %d\n" `expr $COUNT / 10`
+	printf "Disparity between expectation/result with big-superposition for 5 different paths : %.3f\n" `expr $COUNT / 5`

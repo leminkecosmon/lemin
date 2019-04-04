@@ -1,6 +1,6 @@
 CC			=	gcc
 NAME		=	lem-in
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -Werror -ggdb
 LIBDIR		=	libft
 LIBLINK		=	-L $(LIBDIR) -lft
 LIB 		=	$(LIBDIR)/libft.a
@@ -33,7 +33,6 @@ SRC_ALGO	=	add_info.c \
 				reader.c \
 				room_cre_utils.c \
 				solve.c \
-				tool_move.c \
 				view_map.c \
 				visu.c\
 				add_ants.c\

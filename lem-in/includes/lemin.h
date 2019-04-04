@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/03 12:51:18 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:04:40 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct 		s_lemin
 	int 			nb_ants;
 	int 			nb_rooms;
 	int				nb_paths;
+	int				n;
 	char 			**map_v;
 	struct s_path	*select_p;
 	struct s_rooms  *r;
@@ -118,7 +119,7 @@ void				created_hastable(t_lemin *e);
 void				parsing_ants(t_lemin *e, char *line);
 int					generate_hash(char *str, int nb_rooms);
 void				lem_in_error(t_lemin *e, int error);
-void				move_ants_forward(t_lemin *e);
+void				move_ants_forward(t_lemin *e, t_path *p, t_ants *a);
 void				bfs(t_lemin *e);
 void				pop_stack(t_lemin *e, int nb_rooms, int flag);
 int					add_path(t_lemin *e);
@@ -146,5 +147,6 @@ void				path_fun_free(t_lemin *e);
 void				free_info(t_lemin *e);
 void				free_rooms(t_rooms *p);
 void				free_hash(t_lemin *e);
+void				visu(t_lemin *e);
 
 #endif

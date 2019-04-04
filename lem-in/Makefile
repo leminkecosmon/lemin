@@ -32,11 +32,11 @@ SRC_ALGO	=	add_info.c \
 				path_creation_utils_3.c \
 				reader.c \
 				room_cre_utils.c \
-				solve.c \
 				view_map.c \
 				visu.c\
 				add_ants.c\
 				free_func.c\
+				free_func_2.c\
 
 OBJ_ALGO	=	$(SRC_ALGO:.c=.o)
 

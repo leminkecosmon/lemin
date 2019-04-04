@@ -6,11 +6,25 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 10:22:02 by agesp             #+#    #+#             */
-/*   Updated: 2019/04/03 12:38:21 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:33:39 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+
+int			still_paths(t_lemin *e)
+{
+	int i;
+
+	i = 0;
+	while (i < e->nb_rooms)
+	{
+		if (e->map[e->start->id_r][i] == -1 && !e->find_new[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int			paths_remain(t_lemin *e)
 {

@@ -6,12 +6,11 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/03 15:10:39 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:31:15 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-
 
 static void			add_start(t_rooms *r, t_lemin *e, enum pos *d)
 {

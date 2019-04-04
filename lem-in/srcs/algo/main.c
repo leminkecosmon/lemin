@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:37:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/04 11:05:07 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:55:41 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ void			lem_in_error(t_lemin *e, int error)
 		free_rooms(e->r);
 	path_fun_free(e);
 	free_ants(e);
-//	free_hash(e);
+	//	free_hash(e);
 	free(e);
 	if (error == -2)
 		exit(1);
 	exit(0);
 }
 
-void 		print_flag(t_lemin *e, const char **av)
+void			print_flag(t_lemin *e, const char **av)
 {
 	int i;
 
@@ -81,7 +81,7 @@ void 		print_flag(t_lemin *e, const char **av)
 	}
 }
 
-void		print_info(t_lemin *e)
+static void		print_info(t_lemin *e)
 {
 	while (e->i)
 	{
@@ -111,13 +111,14 @@ int			main(int ac, char const *av[])
 	setup_map(e);
 	if ((e->max_lines = get_len(e)) == -5)
 		lem_in_error(e, 13);
+	ft_printf("dd\n");
 	move_ants_forward(e, e->p, e->a);
 	if (e->p->size_path == 2)
 		ft_printf("\n\nsent %d ants directly from start to end", e->nb_ants);
 	else
-	ft_printf("\n\nsent %d ants through %d paths in %d steps\n",
-			e->nb_ants, e->nb_paths, e->max_lines);
+		ft_printf("\n\nsent %d ants through %d paths in %d steps\n",
+				e->nb_ants, e->nb_paths, e->max_lines);
 	print_flag(e, av);
-	lem_in_error(e, -2);
+//	lem_in_error(e, -2);
 	return (0);
 }

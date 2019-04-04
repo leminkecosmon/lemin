@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:38:01 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/03/18 10:59:23 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:22:09 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int			deal_hook(void *param)
 	return (1);
 }
 
-void 	malloc_struct(t_mlx *v)
+void	malloc_struct(t_mlx *v)
 {
-	if (!(v->image = ft_memalloc(sizeof(t_image))) &&
-		!(v->even = ft_memalloc(sizeof(t_event))))
+	if (!(v->image = ft_memalloc(sizeof(t_image))) 
+		&& !(v->even = ft_memalloc(sizeof(t_event))))
 		exit(-1);
 }
 

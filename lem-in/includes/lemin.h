@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/04 11:04:40 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:33:30 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,6 @@ void				free_info(t_lemin *e);
 void				free_rooms(t_rooms *p);
 void				free_hash(t_lemin *e);
 void				visu(t_lemin *e);
+int					still_paths(t_lemin *e);
 
 #endif

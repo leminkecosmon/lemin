@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 12:38:39 by agesp             #+#    #+#             */
-/*   Updated: 2019/04/03 14:32:31 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 11:36:41 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,37 +36,6 @@ t_path		*free_path(t_path *p, int realloc, t_lemin *e)
 		return (p);
 	}
 	return (NULL);
-}
-
-void			free_ants(t_lemin *e)
-{
-	t_ants *a;
-
-	while (e->a)
-	{
-		a = e->a;
-		e->a = e->a->next;
-		if (a->p)
-			free_path(a->p, 0, e);
-		free(a);
-	}
-}
-
-void			path_fun_free(t_lemin *e)
-{
-	if (e->p)
-		free_path(e->p, 0, e);
-	if (e->find_new)
-	{
-		free(e->stack);
-		free(e->map_stack);
-		free(e->find_new);
-		free(e->map_fn);
-		free(e->prev);
-		free(e->map_prev);
-		free(e->visited);
-		free(e->map_visited);
-	}
 }
 
 void			free_info(t_lemin *e)

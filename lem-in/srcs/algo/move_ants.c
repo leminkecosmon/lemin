@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/04 13:42:56 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 14:32:49 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,33 +81,10 @@ int				not_all_printed(t_ants *a)
 	return (0);
 }
 
-void			map_v_realloc(t_lemin *e, t_ants *a, int i)
+void			map_v_realloc_2(t_lemin *e, int i, char *tmp)
 {
-	char	*itoa_tmp;
-	char	*tmp;
-	char	*tmp2;
+	char *tmp2;
 
-
-	if (!(itoa_tmp = ft_itoa(a->nb_ants)))
-		lem_in_error(e, 1);
-	if (!(tmp = ft_strjoin("L", itoa_tmp)))
-	{
-		free(itoa_tmp);
-		lem_in_error(e, 1);
-	}
-	free(itoa_tmp);
-	if (!(tmp2 = ft_strjoin(tmp, "-")))
-	{
-		free(tmp);
-		lem_in_error(e, 1);
-	}
-	free(tmp);
-	if (!(tmp = ft_strjoin(tmp2, e->table_r[a->p->path[a->p->i]]->name)))
-	{
-		free(tmp2);
-		lem_in_error(e, 1);
-	}
-	free(tmp2);
 	if (e->map_v[i])
 	{
 		if (!(tmp2 = ft_strjoin(e->map_v[i], " ")))
@@ -126,12 +103,38 @@ void			map_v_realloc(t_lemin *e, t_ants *a, int i)
 	}
 	else
 	{
-		if (!(e->map_v[i] = ft_strjoin("", tmp)))
-		{
-			free(tmp);
-			lem_in_error(e, 1);
-		}
+		e->map_v[i] = ft_strjoin("", tmp);
+		!e->map_v[i] ? free(tmp) : 0;
+		!e->map_v[i] ? lem_in_error(e, 1) : 0;
 	}
+}
+
+void			map_v_realloc(t_lemin *e, t_ants *a, int i)
+{
+	char	*tmp;
+	char	*tmp2;
+
+	if (!(tmp2 = ft_itoa(a->nb_ants)))
+		lem_in_error(e, 1);
+	if (!(tmp = ft_strjoin("L", tmp2)))
+	{
+		free(tmp2);
+		lem_in_error(e, 1);
+	}
+	free(tmp2);
+	if (!(tmp2 = ft_strjoin(tmp, "-")))
+	{
+		free(tmp);
+		lem_in_error(e, 1);
+	}
+	free(tmp);
+	if (!(tmp = ft_strjoin(tmp2, e->table_r[a->p->path[a->p->i]]->name)))
+	{
+		free(tmp2);
+		lem_in_error(e, 1);
+	}
+	free(tmp2);
+	map_v_realloc_2(e, i, tmp);
 	free(tmp);
 }
 

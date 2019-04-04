@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:37:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/04 13:05:02 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 14:26:49 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ int			main(int ac, char const *av[])
 		ft_printf("\n\nsent %d ants through %d paths in %d steps\n",
 				e->nb_ants, e->nb_paths, e->max_lines);
 	print_flag(e, av);
-//	lem_in_error(e, -2);
+	lem_in_error(e, -2);
 	return (0);
 }

@@ -38,6 +38,37 @@ t_path		*free_path(t_path *p, int realloc, t_lemin *e)
 	return (NULL);
 }
 
+void			free_ants(t_lemin *e)
+{
+	t_ants *a;
+
+	while (e->a)
+	{
+		a = e->a;
+		e->a = e->a->next;
+		if (a->p)
+			free_path(a->p, 0, e);
+		free(a);
+	}
+}
+
+void			path_fun_free(t_lemin *e)
+{
+	if (e->p)
+		free_path(e->p, 0, e);
+	if (e->find_new)
+	{
+		free(e->stack);
+		free(e->map_stack);
+		free(e->find_new);
+		free(e->map_fn);
+		free(e->prev);
+		free(e->map_prev);
+		free(e->visited);
+		free(e->map_visited);
+	}
+}
+
 void			free_info(t_lemin *e)
 {
 	t_info *i;
@@ -63,25 +94,27 @@ void			free_rooms(t_rooms *p)
 		if (save->name)
 			free(save->name);
 		if (save->links)
-			free(save->links); //<< need more freeing
+			free(save->links);
 		if (save->r_p)
 			free(save->r_p);
 		free(save);
 	}
 }
 
+
 void			free_hash(t_lemin *e)
 {
 	int i;
+	t_hash *h;
 
 	i = -1;
 	if (e->h)
 	{
-		while (e->h[++i])
+		while (++i < e->nb_rooms * 1000)
 		{
-			free_rooms(e->h[i]->r);
-			free(e->h[i]);
+			h = e->h[i];
+			free(h);
 		}
 		free(e->h);
 	}
-}	
+}

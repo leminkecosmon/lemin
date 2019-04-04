@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/04 11:47:56 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 13:40:08 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,62 @@ int				not_all_printed(t_ants *a)
 	return (0);
 }
 
-int				do_print(t_lemin *e, t_ants *a, int i)
+void			map_v_realloc(t_lemin *e, t_ants *a, int i)
 {
+	char	*itoa_tmp;
 	char	*tmp;
+	char	*tmp2;
 
+
+	if (!(itoa_tmp = ft_itoa(a->nb_ants)))
+		lem_in_error(e, 1);
+	if (!(tmp = ft_strjoin("L", itoa_tmp)))
+	{
+		free(itoa_tmp);
+		lem_in_error(e, 1);
+	}
+	free(itoa_tmp);
+	if (!(tmp2 = ft_strjoin(tmp, "-")))
+	{
+		free(tmp);
+		lem_in_error(e, 1);
+	}
+	free(tmp);
+	if (!(tmp = ft_strjoin(tmp2, e->table_r[a->p->path[a->p->i]]->name)))
+	{
+		free(tmp2);
+		lem_in_error(e, 1);
+	}
+	free(tmp2);
+	if (e->map_v[i])
+	{
+		if (!(tmp2 = ft_strjoin(e->map_v[i], " ")))
+		{
+			free(tmp);
+			lem_in_error(e, 1);
+		}
+		free(e->map_v[i]);
+		if (!(e->map_v[i] = ft_strjoin(tmp2, tmp)))
+		{
+			free(tmp2);
+			free(tmp);
+			lem_in_error(e, 1);
+		}
+		free(tmp2);
+	}
+	else
+	{
+		if (!(e->map_v[i] = ft_strjoin("", tmp)))
+		{
+			free(tmp);
+			lem_in_error(e, 1);
+		}
+	}
+	free(tmp);
+}
+
+void			do_print(t_lemin *e, t_ants *a, int i)
+{
 	if (a->p->i < a->p->size_path
 			&& e->table_r[a->p->path[a->p->i]]->occuped != 2)
 	{
@@ -92,21 +144,10 @@ int				do_print(t_lemin *e, t_ants *a, int i)
 			e->table_r[a->p->path[a->p->i]]->occuped = 0;
 		else
 			e->table_r[a->p->path[a->p->i]]->occuped = 2;
-		tmp = ft_strjoin("L", ft_itoa(a->nb_ants));
-		tmp = ft_strjoin(tmp, "-");
-		tmp = ft_strjoin(tmp, e->table_r[a->p->path[a->p->i]]->name);
-		if (e->map_v[i])
-		{
-			e->map_v[i] = ft_strjoin(e->map_v[i], " ");
-			e->map_v[i] = ft_strjoin(e->map_v[i], tmp);
-		}
-		else
-			e->map_v[i] = ft_strjoin("", tmp);
-		ft_strdel(&tmp);
+		map_v_realloc(e, a, i);
 		ft_printf("L%d-%s ", a->nb_ants, e->table_r[a->p->path[a->p->i]]->name);
 		a->p->i++;
 	}
-	return (i);
 }
 
 void			move_ants_forward(t_lemin *e, t_path *p, t_ants *a)
@@ -119,7 +160,7 @@ void			move_ants_forward(t_lemin *e, t_path *p, t_ants *a)
 	e->map_v = ft_memalloc(sizeof(char *) * e->nb_ants * e->nb_rooms);
 	while (a)
 	{
-		i = do_print(e, a, i);
+		do_print(e, a, i);
 		if (a->next == NULL && not_all_printed(e->a))
 		{
 			if (a->nb_ants == 4)

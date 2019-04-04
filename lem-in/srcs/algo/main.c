@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:37:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/04 11:55:41 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/04 13:05:02 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ int			main(int ac, char const *av[])
 	setup_map(e);
 	if ((e->max_lines = get_len(e)) == -5)
 		lem_in_error(e, 13);
-	ft_printf("dd\n");
 	move_ants_forward(e, e->p, e->a);
 	if (e->p->size_path == 2)
 		ft_printf("\n\nsent %d ants directly from start to end", e->nb_ants);

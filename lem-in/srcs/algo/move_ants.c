@@ -97,8 +97,8 @@ int				do_print(t_lemin *e, t_ants *a, int i)
 		tmp = ft_strjoin(tmp, e->table_r[a->p->path[a->p->i]]->name);
 		if (e->map_v[i])
 		{
-			e->map_v[i] = ft_strjoin(e->map_v[i], " ");
-			e->map_v[i] = ft_strjoin(e->map_v[i], tmp);
+			tmp = ft_strjoin(e->map_v[i], " ");
+			tmp = ft_strjoin(e->map_v[i], tmp);
 		}
 		else
 			e->map_v[i] = ft_strjoin("", tmp);

@@ -69,7 +69,7 @@ void 		view_link(t_rooms *r, t_rooms *r2, t_mlx *v)
 	fx = r2->x;
 	fy = r2->y;
 	v->color = 0xe1b12c;
-	ft_printf("%d\n%d\n%d\n%d\n",x,y,fx,fy);
+	ft_printf("r1: -> %s  r2-> %s\nx->%d y->%d fx->%d fy->%d\n",r->name, r2->name, x,y,fx,fy);
 	draw_breseham(y, x, fy, fx, v);
 }
 
@@ -127,8 +127,10 @@ void 		move_ants(t_mlx *v, t_lemin *e)
 		i += len;
 		key = generate_hash(str, e->nb_rooms);
 		ft_strdel(&str);
-		if (nb == 1)
-			nb = 20;
+		if (nb % 2)
+			nb *= 10;
+		else
+			nb *= 20;
 		v->color = (nb * 10) * 1000 * 255;
 		v->d = init_design(e->h[key]->r->x + 10, e->h[key]->r->y + 10,\
 		e->h[key]->r->y + 20, e->h[key]->r->x + 20);

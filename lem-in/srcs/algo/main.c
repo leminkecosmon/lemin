@@ -53,7 +53,7 @@ void			lem_in_error(t_lemin *e, int error)
 		free_rooms(e->r);
 	path_fun_free(e);
 	free_ants(e);
-	//	free_hash(e);
+	free_hash(e);
 	free(e);
 	if (error == -2)
 		exit(1);
@@ -83,12 +83,15 @@ void			print_flag(t_lemin *e, const char **av)
 
 static void		print_info(t_lemin *e)
 {
-	while (e->i)
+	t_info *i;
+
+	i = e->i;
+	while (i)
 	{
-		ft_printf("%s\n", e->i->line);
-		if (!e->i->next)
+		ft_printf("%s\n", i->line);
+		if (!i->next)
 			break ;
-		e->i = e->i->next;
+		i = i->next;
 	}
 	ft_printf("\n");
 }

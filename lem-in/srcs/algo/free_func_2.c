@@ -12,33 +12,33 @@
 
 #include "lemin.h"
 
-void			free_ants(t_lemin *e)
-{
-	t_ants *a;
+// void			free_ants(t_lemin *e)
+// {
+// 	t_ants *a;
 
-	while (e->a)
-	{
-		a = e->a;
-		e->a = e->a->next;
-		if (a->p)
-			free_path(a->p, 0, e);
-		free(a);
-	}
-}
+// 	while (e->a)
+// 	{
+// 		a = e->a;
+// 		e->a = e->a->next;
+// 		if (a->p)
+// 			free_path(a->p, 0, e);
+// 		free(a);
+// 	}
+// }
 
-void			path_fun_free(t_lemin *e)
-{
-	if (e->p)
-		free_path(e->p, 0, e);
-	if (e->find_new)
-	{
-		free(e->stack);
-		free(e->map_stack);
-		free(e->find_new);
-		free(e->map_fn);
-		free(e->prev);
-		free(e->map_prev);
-		free(e->visited);
-		free(e->map_visited);
-	}
-}
+// void			path_fun_free(t_lemin *e)
+// {
+// 	if (e->p)
+// 		free_path(e->p, 0, e);
+// 	if (e->find_new)
+// 	{
+// 		free(e->stack);
+// 		free(e->map_stack);
+// 		free(e->find_new);
+// 		free(e->map_fn);
+// 		free(e->prev);
+// 		free(e->map_prev);
+// 		free(e->visited);
+// 		free(e->map_visited);
+// 	}
+// }

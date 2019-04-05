@@ -1,6 +1,6 @@
 CC			=	gcc
 NAME		=	lem-in
-FLAGS		=	-Wall -Wextra -Werror -ggdb -fsanitize=address
+FLAGS		=	-Wall -Wextra -Werror 
 LIBDIR		=	libft
 LIBLINK		=	-L $(LIBDIR) -lft
 LIB 		=	$(LIBDIR)/libft.a
@@ -38,8 +38,6 @@ SRC_ALGO	=	add_info.c \
 				free_func.c\
 				free_func_2.c\
 				tool_map.c\
-				draw.c\
-				move_ants_utils_2.c\
 
 OBJ_ALGO	=	$(SRC_ALGO:.c=.o)
 

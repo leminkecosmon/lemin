@@ -47,7 +47,6 @@ void			lem_in_error(t_lemin *e, int error)
 	free_rooms(e->r);
 	path_fun_free(e);
 	free_ants(e);
-	free_map_v(e);
 	free(e);
 	if (error == -2)
 		exit(1);
@@ -99,19 +98,17 @@ int				main(int ac, char const *av[])
 
 	if ((!(e = ft_memalloc(sizeof(t_lemin)))))
 		lem_in_error(e, 1);
-	if (ac < 1 && av)
-	{
-		ft_putstr("usage: lem-in ,[maps...]");
-		lem_in_error(e, 18);
-	}
+	if (ac < 1)
+		lem_in_error(e, 1);
 	reader(e);
-	if (e->nb_ants == 0)
-		lem_in_error(e, 3);
 	print_info(e);
 	setup_map(e);
 	if ((e->max_lines = get_len(e)) == -5)
 		lem_in_error(e, 13);
 	move_ants_forward(e, e->p, e->a);
+	zero_ants(e);
+	zero_vistid(e);
+	e->stop = -1;
 	if (e->p->size_path == 2)
 		ft_printf("\n\nsent %d ants directly from start to end", e->nb_ants);
 	else

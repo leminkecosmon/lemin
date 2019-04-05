@@ -43,19 +43,6 @@ void			path_fun_free(t_lemin *e)
 	}
 }
 
-void			free_map_v(t_lemin *e)
-{
-	int i;
-
-	i = -1;
-	if (e->map_v)
-	{
-		while (++i < e->max_lines)
-			ft_strdel(&(e->map_v[i]));
-		free(e->map_v);
-	}
-}
-
 void			free_map1(t_lemin *e)
 {
 	int i;
@@ -66,5 +53,17 @@ void			free_map1(t_lemin *e)
 		while (++i < e->nb_rooms)
 			free(e->map[i]);
 		free(e->map);
+	}
+}
+
+void			zero_ants(t_lemin *e)
+{
+	t_ants *a;
+
+	a = e->a;
+	while (a)
+	{
+		a->p->i = 1;
+		a = a->next;
 	}
 }

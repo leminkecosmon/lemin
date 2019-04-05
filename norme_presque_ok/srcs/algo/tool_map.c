@@ -34,17 +34,23 @@ static void			view_coor(t_rooms *r, t_mlx *v)
 
 void				view_link(t_rooms *r, t_rooms *r2, t_mlx *v)
 {
-	int y;
-	int x;
-	int fy;
-	int fx;
+	t_design	*d;
+	t_point		p;
 
-	x = r->x;
-	y = r->y;
-	fx = r2->x;
-	fy = r2->y;
+	if (!(d = init_design(r->x, r->y, r2->y, r2->x)))
+		free_visu(v);
 	v->color = 0xe1b12c;
-	draw_breseham(y, x, fy, fx, v);
+	p.dx = d->fx - d->x;
+	p.dy = d->fy - d->y;
+	p.xinc = (p.dx > 0) ? 1 : -1;
+	p.yinc = (p.dy > 0) ? 1 : -1;
+	p.dx = ft_abs(p.dx);
+	p.dy = ft_abs(p.dy);
+	if (p.dx < p.dy)
+		draw_bresehamb(v, d, p);
+	else
+		draw_breseham(v, d, p);
+	free(d);
 }
 
 void				init_r(t_mlx *v, int size_path, int *path, int spacey)

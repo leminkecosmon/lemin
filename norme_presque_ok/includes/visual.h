@@ -34,6 +34,14 @@ typedef	struct			s_event
 	int					color;
 }						t_event;
 
+typedef struct			s_point
+{
+	int					dx;
+	int					dy;
+	int					yinc;
+	int					xinc;
+}						t_point;
+
 typedef struct			s_design
 {
 	int					fx;
@@ -69,10 +77,10 @@ int						deal_key(int key, t_mlx *e);
 void					viewer(t_mlx *v);
 void					free_visu(t_mlx *v);
 void					rooms_links(t_mlx *v, t_rooms *r, int i, int spacew);
-int						max(t_lemin *e);
 void					init_r(t_mlx *v, int size_path, int *path, int spacey);
 int						init_start(t_mlx *v, int spacew);
-void					draw_breseham(int y, int x, int yf, int xf, t_mlx *v);
+void					draw_breseham(t_mlx *v, t_design *d, t_point p);
+void					draw_bresehamb(t_mlx *v, t_design *d, t_point p);
 void					view_link(t_rooms *r, t_rooms *r2, t_mlx *v);
 
 #endif

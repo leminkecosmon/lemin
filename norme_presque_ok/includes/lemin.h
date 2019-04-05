@@ -64,6 +64,7 @@ typedef	struct		s_ants
 typedef struct		s_path
 {
 	int				i;
+	int				ok;
 	int				*path;
 	int				conti;
 	int				s_conti;
@@ -95,7 +96,6 @@ typedef struct		s_lemin
 	int				nb_paths;
 	int				n;
 	int				stop;
-	char			**map_v;
 	struct s_path	*select_p;
 	struct s_rooms	*r;
 	struct s_ants	*a;
@@ -118,7 +118,7 @@ int					parsing_links(char *line, t_lemin *e);
 t_rooms				**table_rooms(t_lemin *e);
 void				created_hastable(t_lemin *e);
 void				parsing_ants(t_lemin *e, char *line);
-int					generate_hash(char *str, int nb_rooms);
+long long			generate_hash(char *str, int nb_rooms);
 void				lem_in_error(t_lemin *e, int error);
 void				move_ants_forward(t_lemin *e, t_path *p, t_ants *a);
 void				bfs(t_lemin *e);
@@ -151,8 +151,8 @@ void				free_hash(t_lemin *e);
 void				visu(t_lemin *e);
 int					still_paths(t_lemin *e);
 void				free_map1(t_lemin *e);
-void				free_map_v(t_lemin *e);
-void				map_v_realloc(t_lemin *e, t_ants *a, int i);
-void				do_print(t_lemin *e, t_ants *a, int i);
+void				malloc_move(t_lemin *e, t_path *p);
+int					not_all_printed(t_ants *a);
+void				zero_ants(t_lemin *e);
 
 #endif

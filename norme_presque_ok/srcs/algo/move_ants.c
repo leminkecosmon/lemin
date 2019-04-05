@@ -83,21 +83,24 @@ int				not_all_printed(t_ants *a)
 
 void			move_ants_forward(t_lemin *e, t_path *p, t_ants *a)
 {
-	int i;
-
-	i = 0;
 	set_path_capacity(e);
 	malloc_move(e, p);
-	e->map_v = ft_memalloc(sizeof(char *) * e->max_lines);
 	while (a)
 	{
-		do_print(e, a, i);
+		if (a->p->i < a->p->size_path\
+			&& e->table_r[a->p->path[a->p->i]]->occuped != 2)
+		{
+			if (a->p->i + 1 == a->p->size_path)
+				e->table_r[a->p->path[a->p->i]]->occuped = 0;
+			else
+				e->table_r[a->p->path[a->p->i]]->occuped = 2;
+			ft_printf("L%d-%s ", a->nb_ants,\
+			e->table_r[a->p->path[a->p->i]]->name);
+			a->p->i++;
+		}
 		if (a->next == NULL && not_all_printed(e->a))
 		{
-			if (a->nb_ants == 4)
-				e->table_r[a->p->path[a->p->i]]->occuped = 0;
 			ft_putchar('\n');
-			i++;
 			zero_vistid(e);
 			a = e->a;
 		}

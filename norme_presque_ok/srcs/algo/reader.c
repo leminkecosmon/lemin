@@ -65,4 +65,6 @@ void			reader(t_lemin *e)
 	links_rooms(e);
 	if (!e->end || !e->start)
 		lem_in_error(e, 8);
+	if (e->nb_ants == 0)
+		lem_in_error(e, 3);
 }

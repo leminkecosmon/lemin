@@ -12,10 +12,10 @@
 
 #include "lemin.h"
 
-int				generate_hash(char *str, int nb_rooms)
+long long		generate_hash(char *str, int nb_rooms)
 {
-	int i;
-	int key;
+	int			i;
+	long long	key;
 
 	key = 0;
 	i = 0;
@@ -78,7 +78,7 @@ void			created_hastable(t_lemin *e)
 	int i;
 
 	i = 0;
-	if (!(e->h = ft_memalloc(sizeof(t_hash*) * e->nb_rooms * 1000)))
+	if (!(e->h = ft_memalloc(sizeof(t_hash*) * e->nb_rooms * 10000)))
 		lem_in_error(e, 1);
 	init_hash(e);
 }

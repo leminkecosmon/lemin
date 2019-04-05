@@ -12,58 +12,92 @@
 
 #include "visual.h"
 
-int			max(t_lemin *e)
+void			draw_bresehamb(t_mlx *v, t_design *d, t_point p)
 {
-	t_path	*p;
-	int		i;
+	int cumul;
+	int i;
 
-	i = 0;
-	p = e->p;
-	while (p)
+	img_pixel_put(v, d->x, d->y);
+	i = -1;
+	cumul = p.dy / 2;
+	while (++i < p.dy)
 	{
-		i = p->size_path;
-		p = p->next;
+		d->y += p.yinc;
+		cumul += p.dx;
+		if (cumul >= p.dy)
+		{
+			cumul -= p.dy;
+			d->x += p.xinc;
+		}
+		img_pixel_put(v, d->x, d->y);
 	}
-	return (i);
 }
 
-void		move_ants(t_mlx *v, t_lemin *e, size_t i)
+void			draw_breseham(t_mlx *v, t_design *d, t_point p)
 {
-	int		key;
-	char	*str;
-	int		len;
-	int		nb;
+	int cumul;
+	int i;
 
-	while (i++ < ft_strlen(e->map_v[e->n]))
+	img_pixel_put(v, d->x, d->y);
+	i = -1;
+	cumul = p.dx / 2;
+	while (++i < p.dx)
 	{
-		len = 0;
-		if (e->map_v[e->n][i] == 'L')
-			i++;
-		nb = ft_atoi(&e->map_v[e->n][i]);
-		while (e->map_v[e->n][i] != '-')
-			i++;
-		if (e->map_v[e->n][i] == '-')
-			i++;
-		while (e->map_v[e->n][i + len] != ' ' && e->map_v[e->n][i + len])
-			len++;
-		str = ft_strsub(e->map_v[e->n], i, len);
-		i += len;
-		key = generate_hash(str, e->nb_rooms);
-		while (0 != ft_strcmp(e->h[key]->r->name, str))
-			key++;
-		ft_strdel(&str);
-		if (nb % 2)
-			nb *= 10;
+		d->x += p.xinc;
+		cumul += p.dy;
+		if (cumul >= p.dx)
+		{
+			cumul -= p.dx;
+			d->y += p.yinc;
+		}
+		img_pixel_put(v, d->x, d->y);
+	}
+}
+
+static void		do_print(t_mlx *v, t_lemin *e, t_ants *a)
+{
+	if (a->p->i < a->p->size_path
+			&& e->table_r[a->p->path[a->p->i]]->occuped != 2)
+	{
+		if (a->p->i + 1 == a->p->size_path)
+			e->table_r[a->p->path[a->p->i]]->occuped = 0;
 		else
-			nb *= 20;
-		v->color = (nb * 10) * 1000 * 255;
-		v->d = init_design(e->h[key]->r->x + 10, e->h[key]->r->y + 10,
-		e->h[key]->r->y + 20, e->h[key]->r->x + 20);
+			e->table_r[a->p->path[a->p->i]]->occuped = 2;
+		v->color = (a->nb_ants % 2) ? a->nb_ants * 10 : a->nb_ants * 20;
+		v->color += (a->nb_ants * 10) * 1000 * 255;
+		v->d = init_design(e->table_r[a->p->path[a->p->i]]->x + 10,\
+		e->table_r[a->p->path[a->p->i]]->y + 10,\
+		e->table_r[a->p->path[a->p->i]]->y + 20,\
+		e->table_r[a->p->path[a->p->i]]->x + 20);
 		function_color(v->d, v);
+		if (e->n != e->stop)
+			ft_printf("L%d-%s ", a->nb_ants,\
+			e->table_r[a->p->path[a->p->i]]->name);
+		a->p->ok = 1;
+	}
+	else
+		a->p->ok = 0;
+}
+
+static void		ants_forward(t_mlx *v, t_lemin *e, t_ants *a)
+{
+	while (a)
+	{
+		do_print(v, e, a);
+		if (a->next == NULL && not_all_printed(e->a))
+		{
+			if (e->n != e->stop)
+				ft_putchar('\n');
+			zero_vistid(e);
+			e->stop = e->n;
+			break ;
+		}
+		else
+			a = a->next;
 	}
 }
 
-void		viewer(t_mlx *v)
+void			viewer(t_mlx *v)
 {
 	t_path	*p;
 	t_rooms	*r;
@@ -84,7 +118,7 @@ void		viewer(t_mlx *v)
 		p = p->next;
 	}
 	rooms_links(v, v->e->r, i, spacew);
-	move_ants(v, v->e, 0);
+	ants_forward(v, v->e, v->e->a);
 	mlx_clear_window(v->mlx_ptr, v->win_ptr);
 	design_windows(v);
 	mlx_put_image_to_window(v->mlx_ptr, v->win_ptr, v->image->img, 0, 0);

@@ -26,15 +26,24 @@ int					**ft_malloc_matrix(t_lemin *e)
 	return (matrix);
 }
 
-int					init_map(t_lemin *e, char *s1, char *s2)
+int					init_map(t_lemin *e, char *s1, char *s2, long long key2)
 {
-	int key1;
-	int key2;
+	long long key1;
 
 	key1 = generate_hash(s1, e->nb_rooms);
 	key2 = generate_hash(s2, e->nb_rooms);
+	if (ft_strlen(s2) > 20 || ft_strlen(s1) > 20)
+	{
+		ft_strdel(&s1);
+		ft_strdel(&s2);
+		lem_in_error(e, 2);
+	}
 	if (e->h[key1] == NULL || e->h[key2] == NULL)
+	{
+		ft_strdel(&s1);
+		ft_strdel(&s2);
 		return (1);
+	}
 	while (0 != ft_strcmp(e->h[key1]->r->name, s1))
 		key1++;
 	while (0 != ft_strcmp(e->h[key2]->r->name, s2))
@@ -84,10 +93,12 @@ int					parsing_links(char *line, t_lemin *e)
 	s1 = name_rooms(e, line, '-');
 	if (!(s2 = ft_strdup(&line[++i])))
 	{
+		ft_strdel(&s1);
+		ft_strdel(&s2);
 		ft_strdel(&line);
 		lem_in_error(e, 1);
 	}
-	if (init_map(e, s1, s2))
+	if (init_map(e, s1, s2, 0))
 		return (1);
 	ft_strdel(&s1);
 	ft_strdel(&s2);

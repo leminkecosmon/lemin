@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/05 11:33:29 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/05 12:43:11 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void			reader(t_lemin *e)
 	{
 		add_info(e, line);
 		parsing_glob(e, line, &d, 0);
-		ft_strdel(&line);
 		if (e->stop == 1)
 			break ;
+		ft_strdel(&line);
 	}
 	if (d != LINKS)
 		lem_in_error(e, 12);

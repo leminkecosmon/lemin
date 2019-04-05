@@ -1,6 +1,6 @@
 CC			=	gcc
 NAME		=	lem-in
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -Werror -ggdb -fsanitize=address
 LIBDIR		=	libft
 LIBLINK		=	-L $(LIBDIR) -lft
 LIB 		=	$(LIBDIR)/libft.a

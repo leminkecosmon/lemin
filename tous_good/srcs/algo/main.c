@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 15:37:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/05 11:24:19 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/08 14:13:17 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int				main(int ac, char const *av[])
 	zero_vistid(e);
 	e->stop = -1;
 	if (e->p->size_path == 2)
-		ft_printf("\n\nsent %d ants directly from start to end", e->nb_ants);
+		ft_printf("\n\nsent %d ants directly from start to end\n", e->nb_ants);
 	else
 		ft_printf("\n\nsent %d ants through %d paths in %d steps\n",
 				e->nb_ants, e->nb_paths, e->max_lines);

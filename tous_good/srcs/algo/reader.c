@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/05 12:43:11 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/08 13:52:01 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@ static void		verif_start_end(t_lemin *e, enum pos *d)
 
 	while (get_next_line(0, &line) > 0)
 	{
+		add_info(e, line);
 		if (line[0] != '#')
 			break ;
 		add_info(e, line);
 		ft_strdel(&line);
 	}
+	if (!line || (line && line[0] == 'L'))
+		ft_strdel(&line);
+	if (!line)
+		lem_in_error(e, 8);
 	if (line[0] == 'L')
 		lem_in_error(e, 6);
 	rooms(line, e, d);

@@ -6,7 +6,7 @@
 /*   By: agesp <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by agesp             #+#    #+#             */
-/*   Updated: 2019/04/04 11:34:37 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/08 13:18:03 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		clean_setup_exit(t_lemin *e)
 {
 	if (!e->select_p && !e->p)
 		lem_in_error(e, 13);
-	if (e->p)
+	if (e->p && e->map[e->start->id_r][e->end->id_r] == 0)
 		free_path(e->p, 0, e);
 	if (e->map[e->start->id_r][e->end->id_r] == 0)
 		e->p = e->select_p;

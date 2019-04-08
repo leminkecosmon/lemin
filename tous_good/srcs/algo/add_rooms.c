@@ -6,13 +6,13 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/05 11:13:30 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/08 16:42:36 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-static void			add_start(t_rooms *r, t_lemin *e, enum pos *d)
+static void			add_start(t_rooms *r, t_lemin *e, enum e_pos *d)
 {
 	if (!e->start && *d == START)
 		e->start = r;
@@ -36,7 +36,7 @@ static void			copy_next_room(t_rooms **tmp, t_lemin *e, char *line, int i)
 	(*tmp)->next->next = NULL;
 }
 
-static void			add_rooms(t_lemin *e, char *line, int i, enum pos *d)
+static void			add_rooms(t_lemin *e, char *line, int i, enum e_pos *d)
 {
 	t_rooms *tmp;
 
@@ -57,7 +57,7 @@ static void			add_rooms(t_lemin *e, char *line, int i, enum pos *d)
 		add_start(tmp, e, d);
 }
 
-void				rooms(char *line, t_lemin *e, enum pos *d)
+void				rooms(char *line, t_lemin *e, enum e_pos *d)
 {
 	int		i;
 

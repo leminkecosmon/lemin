@@ -6,13 +6,13 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/08 13:52:01 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/08 16:42:38 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-static void		verif_start_end(t_lemin *e, enum pos *d)
+static void		verif_start_end(t_lemin *e, enum e_pos *d)
 {
 	char	*line;
 
@@ -34,7 +34,7 @@ static void		verif_start_end(t_lemin *e, enum pos *d)
 	ft_strdel(&line);
 }
 
-static void		parsing_glob(t_lemin *e, char *line, enum pos *d, int n)
+static void		parsing_glob(t_lemin *e, char *line, enum e_pos *d, int n)
 {
 	if (!ft_strcmp(line, "##start") && (*d = START))
 		verif_start_end(e, d);
@@ -54,7 +54,7 @@ static void		parsing_glob(t_lemin *e, char *line, enum pos *d, int n)
 void			reader(t_lemin *e)
 {
 	char		*line;
-	enum pos	d;
+	enum e_pos	d;
 
 	d = ANTS;
 	e->nb_rooms = 0;

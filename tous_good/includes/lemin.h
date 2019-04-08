@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:31:29 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/08 14:12:08 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/08 16:38:49 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "libft.h"
 # define INT_MAX  2147483647
 
-enum				pos
+enum				e_pos
 {
 	ANTS,
 	ROOMS,
@@ -113,7 +113,7 @@ void				add_info(t_lemin *e, char *line);
 char				*name_rooms(t_lemin *e, char *line, char c);
 t_rooms				*new_rooms(t_lemin *e);
 void				parsing_rooms(t_lemin *e, char *line, int i);
-void				rooms(char *line, t_lemin *e, enum pos *d);
+void				rooms(char *line, t_lemin *e, enum e_pos *d);
 int					parsing_links(char *line, t_lemin *e);
 t_rooms				**table_rooms(t_lemin *e);
 void				created_hastable(t_lemin *e);

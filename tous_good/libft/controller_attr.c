@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 17:56:32 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/05 13:28:10 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/09 12:31:43 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*controller_flag(t_parsing *lst, char *str)
 	else if (lst->hash && lst->conv == 'x' && ft_strlen(str))
 		return (ft_strncpy(str, "0X", 2));
 	if (lst->hash && (lst->conv == 'o' || lst->conv == 'O')\
-		&& !lst->zero && (!lst->prec || lst->prec == -1))
+			&& !lst->zero && (!lst->prec || lst->prec == -1))
 		return (addoctachar(str));
 	else if (lst->hash && (lst->conv == 'o' || lst->conv == 'O'))
 		return (ft_strncpy(str, "0", 1));
@@ -32,8 +32,8 @@ char	*controller_flag(t_parsing *lst, char *str)
 		if (str[0] != '-')
 			str = straddnchar(str, 0, 1, '+');
 	}
-	if (issigned(lst) && is_digit(str[0]) && lst->space &&\
-		(!lst->prec || lst->decimal > lst->prec))
+	if (issigned(lst) && is_digit(str[0]) && lst->space\
+			&& (!lst->prec || lst->decimal > lst->prec))
 		str = straddnchar(str, 0, 1, ' ');
 	else if (issigned(lst) && is_digit(str[0]) && lst->space)
 		str = ft_strncpy(str, " ", 1);
@@ -103,9 +103,9 @@ char	*controller_prec(t_parsing *lst, char *str)
 		}
 		return (str);
 	}
-	else if ((lst->conv != 'c' && lst->prec > 0 && !lst->hash) ||
-			(lst->conv != 'o' && lst->conv != 'O' &&
-			lst->prec > 0 && lst->hash))
+	else if ((lst->conv != 'c' && lst->prec > 0 && !lst->hash)
+			|| (lst->conv != 'o' && lst->conv != 'O'
+			&& lst->prec > 0 && lst->hash))
 	{
 		new = ft_strncpy(ft_strnew(lst->prec), str, lst->prec);
 		freestr(str);

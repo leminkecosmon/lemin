@@ -6,7 +6,7 @@
 /*   By: kecosmon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:59:44 by kecosmon          #+#    #+#             */
-/*   Updated: 2019/04/05 11:14:24 by agesp            ###   ########.fr       */
+/*   Updated: 2019/04/09 09:49:10 by agesp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void		init_hash(t_lemin *e)
 	while (r)
 	{
 		key = generate_hash(r->name, e->nb_rooms);
+		if (key < 0)
+			lem_in_error(e, 19);
 		if (e->h[key])
 			while (e->h[key])
 				key++;
